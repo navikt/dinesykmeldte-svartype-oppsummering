@@ -5,7 +5,6 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { DehydratedState, Hydrate } from 'react-query/hydration';
 
 import '../style/global.css';
-import { logger } from '../utils/logger';
 
 interface AppProps extends Omit<NextAppProps, 'pageProps'> {
     pageProps: PropsWithChildren<unknown> & {
@@ -26,8 +25,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 },
             }),
     );
-
-    logger.error(new Error('Lole'));
 
     return (
         <QueryClientProvider client={queryClient}>
