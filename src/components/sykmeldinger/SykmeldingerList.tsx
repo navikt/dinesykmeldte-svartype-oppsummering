@@ -1,64 +1,56 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import { BodyShort, Cell, Grid, LinkPanel, Heading } from '@navikt/ds-react';
+import { Cell, Grid, Heading } from '@navikt/ds-react';
 import { Bandage } from '@navikt/ds-icons';
-import Link from 'next/link';
 
-import { useMineSykmeldteQuery } from '../../graphql/queries/react-query.generated';
+import { PreviewSykmeldtFragment } from '../../graphql/queries/react-query.generated';
+import { HighlightedLinkPanel, LinkPanel } from '../shared/links/LinkPanel';
 
 import styles from './SykmeldingerList.module.css';
 
-function SykmeldingerList(): JSX.Element {
-    const {
-        query: { sykmeldtId },
-    } = useRouter();
+interface Props {
+    sykmeldtId: string;
+    sykmeldt: PreviewSykmeldtFragment;
+}
 
-    if (!sykmeldtId || typeof sykmeldtId !== 'string') {
-        throw new Error('Illegal state: Can display list without person uuid path parameter');
-    }
-
-    const { data } = useMineSykmeldteQuery();
+function SykmeldingerList({ sykmeldtId, sykmeldt }: Props): JSX.Element {
+    const unreadSykmeldinger = sykmeldt.previewSykmeldinger.filter((it) => !it.lest);
+    const readSykmeldinger = sykmeldt.previewSykmeldinger.filter((it) => it.lest);
 
     return (
         <div className={styles.listRoot}>
-            <Heading size="medium" level="2" className={styles.listHeader}>
-                Uleste sykmeldinger
-            </Heading>
-            <Grid>
-                {data?.mineSykmeldte?.map((it) => (
-                    <Cell key={it.fnr} xs={12}>
-                        <SykmeldingListItem />
-                    </Cell>
-                ))}
-            </Grid>
+            <section aria-labelledby="sykmeldinger-list-uleste-header">
+                <Heading id="sykmeldinger-list-uleste-header" size="medium" level="2" className={styles.listHeader}>
+                    Uleste sykmeldinger
+                </Heading>
+                <Grid>
+                    {unreadSykmeldinger.map((it) => (
+                        <Cell key={it.id} xs={12}>
+                            <HighlightedLinkPanel
+                                href={`/sykmeldt/${sykmeldtId}/sykmelding/${it.id}`}
+                                Icon={Bandage}
+                                description="TODO antall dager"
+                            >
+                                Sykmelding
+                            </HighlightedLinkPanel>
+                        </Cell>
+                    ))}
+                </Grid>
+            </section>
+            <section aria-labelledby="sykmeldinger-list-leste-header">
+                <Heading id="sykmeldinger-list-leste-header" size="medium" level="2" className={styles.listHeader}>
+                    Leste sykmeldinger
+                </Heading>
+                <Grid>
+                    {readSykmeldinger.map((it) => (
+                        <Cell key={it.id} xs={12}>
+                            <LinkPanel href={`/sykmeldt/${sykmeldtId}/sykmelding/${it.id}`} Icon={Bandage}>
+                                Sykmelding
+                            </LinkPanel>
+                        </Cell>
+                    ))}
+                </Grid>
+            </section>
         </div>
-    );
-}
-
-function SykmeldingListItem() {
-    const { asPath } = useRouter();
-
-    return (
-        <Link href={`${asPath}/sykmelding/TODO`} passHref>
-            <LinkPanel>
-                <div
-                    style={{
-                        display: 'grid',
-                        gridAutoFlow: 'column',
-                        gap: '2rem',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Bandage fontSize="28px" focusable={false} />
-                    <div>
-                        <Heading size="medium" level="3">
-                            TODO
-                        </Heading>
-                        <BodyShort>TODO ekstra info</BodyShort>
-                    </div>
-                </div>
-            </LinkPanel>
-        </Link>
     );
 }
 
