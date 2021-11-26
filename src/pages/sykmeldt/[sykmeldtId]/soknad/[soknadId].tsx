@@ -1,40 +1,25 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
+import React from 'react';
 import Head from 'next/head';
 import { ContentContainer } from '@navikt/ds-react';
 import { QueryClient } from 'react-query';
 
 import { useSoknadByIdQuery } from '../../../../graphql/queries/react-query.generated';
-import { logger } from '../../../../utils/logger';
-import { getPublicEnv } from '../../../../utils/env';
 import { withAuthenticatedPage } from '../../../../auth/withAuthantication';
 import { GetServerSidePropsPrefetchResult } from '../../../../shared/types';
 import { prefetchQuery, wrapProps } from '../../../../graphql/prefetching';
-
-const publicConfig = getPublicEnv();
+import { createSoknadBreadcrumbs, useUpdateBreadcrumbs } from '../../../../hooks/useBreadcrumbs';
+import useParam, { RouteLocation } from '../../../../hooks/useParam';
+import { useSykmeldt } from '../../../../hooks/useSykmeldt';
 
 function SoknadId(): JSX.Element {
-    const {
-        query: { soknadId },
-    } = useRouter();
-
-    useEffect(() => {
-        setBreadcrumbs([
-            // TODO fix this, ref: https://trello.com/c/xT1NWidw/1908-implementere-korrekte-breadcrumbs-p%C3%A5-alle-pages-i-dine-sykmeldte
-            { title: 'Dine sykmeldte', url: publicConfig.publicPath || '/' },
-            { title: 'This person', url: '/TODO/actual/path' },
-            { title: 'Sykmelding', url: location.pathname },
-        ]).catch(() => {
-            logger.error('klarte ikke å oppdatere breadcrumbs');
-        });
-    });
-
-    if (typeof soknadId !== 'string') {
-        throw new Error('Ugyldig soknadId id');
-    }
-
+    const sykmeldtQuery = useSykmeldt();
+    const { sykmeldtId, soknadId } = useParam(RouteLocation.Soknad);
     const { data, error, isLoading } = useSoknadByIdQuery({ soknadId });
+
+    useUpdateBreadcrumbs(
+        () => createSoknadBreadcrumbs(sykmeldtId, sykmeldtQuery.sykmeldt),
+        [sykmeldtId, sykmeldtQuery.sykmeldt],
+    );
 
     return (
         <div>

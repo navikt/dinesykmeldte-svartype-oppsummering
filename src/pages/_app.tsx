@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { DehydratedState, Hydrate } from 'react-query/hydration';
 
+import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs';
 import '../style/global.css';
 
 interface AppProps extends Omit<NextAppProps, 'pageProps'> {
@@ -13,6 +14,7 @@ interface AppProps extends Omit<NextAppProps, 'pageProps'> {
 }
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+    useHandleDecoratorClicks();
     const [queryClient] = useState(
         () =>
             new QueryClient({

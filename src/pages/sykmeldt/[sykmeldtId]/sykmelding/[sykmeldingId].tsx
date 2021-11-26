@@ -1,41 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import { ContentContainer } from '@navikt/ds-react';
-import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
 import { QueryClient } from 'react-query';
-import { useRouter } from 'next/router';
 
 import Veileder from '../../../../components/shared/veileder/Veileder';
-import { logger } from '../../../../utils/logger';
 import { withAuthenticatedPage } from '../../../../auth/withAuthantication';
 import { GetServerSidePropsPrefetchResult } from '../../../../shared/types';
 import { prefetchQuery, wrapProps } from '../../../../graphql/prefetching';
-import { getPublicEnv } from '../../../../utils/env';
 import { useSykmeldingByIdQuery } from '../../../../graphql/queries/react-query.generated';
-
-const publicConfig = getPublicEnv();
+import { createSykmeldingBreadcrumbs, useUpdateBreadcrumbs } from '../../../../hooks/useBreadcrumbs';
+import useParam, { RouteLocation } from '../../../../hooks/useParam';
+import { useSykmeldt } from '../../../../hooks/useSykmeldt';
 
 function Sykmelding(): JSX.Element {
-    const {
-        query: { sykmeldingId },
-    } = useRouter();
-
-    useEffect(() => {
-        setBreadcrumbs([
-            // TODO fix this, ref: https://trello.com/c/xT1NWidw/1908-implementere-korrekte-breadcrumbs-p%C3%A5-alle-pages-i-dine-sykmeldte
-            { title: 'Dine sykmeldte', url: publicConfig.publicPath || '/' },
-            { title: 'This person', url: '/TODO/actual/path' },
-            { title: 'Sykmelding', url: location.pathname },
-        ]).catch(() => {
-            logger.error('klarte ikke å oppdatere breadcrumbs');
-        });
-    });
-
-    if (typeof sykmeldingId !== 'string') {
-        throw new Error('Ugyldig sykmelding id');
-    }
-
+    const sykmeldtQuery = useSykmeldt();
+    const { sykmeldtId, sykmeldingId } = useParam(RouteLocation.Sykmelding);
     const { data, isLoading, error } = useSykmeldingByIdQuery({ sykmeldingId });
+
+    useUpdateBreadcrumbs(
+        () => createSykmeldingBreadcrumbs(sykmeldtId, sykmeldtQuery.sykmeldt),
+        [sykmeldtId, sykmeldtQuery.sykmeldt],
+    );
 
     return (
         <div>
