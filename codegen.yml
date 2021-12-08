@@ -16,16 +16,14 @@ generates:
           content: '/* eslint-disable */'
     config:
       fetcher:
-        endpoint: "`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/graphql`"
-        fetchParams: >
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
+        func: './clientFetcher#fetcher'
       errorType: 'Error'
       exposeDocument: true
       exposeQueryKeys: true
+      nonOptionalTypename: true
+      scalars:
+        LocalDate: string
+        LocalDateTime: string
   ./src/graphql/resolvers/resolvers.generated.ts:
     plugins:
       - typescript

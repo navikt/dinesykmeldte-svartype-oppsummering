@@ -1,34 +1,11 @@
 /* eslint-disable */
 import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
+import { fetcher } from './clientFetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-    return async (): Promise<TData> => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/graphql` as string, {
-            method: 'POST',
-            ...{
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            },
-            body: JSON.stringify({ query, variables }),
-        });
-
-        const json = await res.json();
-
-        if (json.errors) {
-            const { message } = json.errors[0];
-
-            throw new Error(message);
-        }
-
-        return json.data;
-    };
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
     ID: string;
@@ -36,26 +13,26 @@ export type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
-    LocalDate: any;
-    LocalDateTime: any;
+    LocalDate: string;
+    LocalDateTime: string;
 };
 
 export type AktivitetIkkeMulig = {
-    __typename?: 'AktivitetIkkeMulig';
+    __typename: 'AktivitetIkkeMulig';
     arbeidsrelatertArsak?: Maybe<ArbeidsrelatertArsak>;
     fom: Scalars['LocalDate'];
     tom: Scalars['LocalDate'];
 };
 
 export type Arbeidsgiver = {
-    __typename?: 'Arbeidsgiver';
+    __typename: 'Arbeidsgiver';
     navn?: Maybe<Scalars['String']>;
     orgnummer: Scalars['String'];
     yrke?: Maybe<Scalars['String']>;
 };
 
 export type ArbeidsrelatertArsak = {
-    __typename?: 'ArbeidsrelatertArsak';
+    __typename: 'ArbeidsrelatertArsak';
     arsak: Array<ArbeidsrelatertArsakEnum>;
     beskrivelse?: Maybe<Scalars['String']>;
 };
@@ -66,27 +43,27 @@ export enum ArbeidsrelatertArsakEnum {
 }
 
 export type Avventende = {
-    __typename?: 'Avventende';
+    __typename: 'Avventende';
     fom: Scalars['LocalDate'];
     tilrettelegging?: Maybe<Scalars['String']>;
     tom: Scalars['LocalDate'];
 };
 
 export type Behandler = {
-    __typename?: 'Behandler';
+    __typename: 'Behandler';
     hprNummer?: Maybe<Scalars['String']>;
     navn: Scalars['String'];
     telefon?: Maybe<Scalars['String']>;
 };
 
 export type Behandlingsdager = {
-    __typename?: 'Behandlingsdager';
+    __typename: 'Behandlingsdager';
     fom: Scalars['LocalDate'];
     tom: Scalars['LocalDate'];
 };
 
 export type Gradert = {
-    __typename?: 'Gradert';
+    __typename: 'Gradert';
     fom: Scalars['LocalDate'];
     grad: Scalars['Int'];
     reisetilskudd: Scalars['Boolean'];
@@ -94,7 +71,7 @@ export type Gradert = {
 };
 
 export type Mutation = {
-    __typename?: 'Mutation';
+    __typename: 'Mutation';
     read?: Maybe<Scalars['Boolean']>;
 };
 
@@ -106,7 +83,7 @@ export type MutationReadArgs = {
 export type Periode = AktivitetIkkeMulig | Avventende | Behandlingsdager | Gradert | Reisetilskudd;
 
 export type PreviewSoknad = {
-    __typename?: 'PreviewSoknad';
+    __typename: 'PreviewSoknad';
     fom?: Maybe<Scalars['LocalDate']>;
     id: Scalars['ID'];
     lest: Scalars['Boolean'];
@@ -117,7 +94,7 @@ export type PreviewSoknad = {
 };
 
 export type PreviewSykmelding = {
-    __typename?: 'PreviewSykmelding';
+    __typename: 'PreviewSykmelding';
     fom: Scalars['LocalDate'];
     id: Scalars['ID'];
     lest: Scalars['Boolean'];
@@ -126,7 +103,7 @@ export type PreviewSykmelding = {
 };
 
 export type PreviewSykmeldt = {
-    __typename?: 'PreviewSykmeldt';
+    __typename: 'PreviewSykmeldt';
     fnr: Scalars['String'];
     friskmeldt: Scalars['Boolean'];
     narmestelederId: Scalars['String'];
@@ -138,7 +115,7 @@ export type PreviewSykmeldt = {
 };
 
 export type Query = {
-    __typename?: 'Query';
+    __typename: 'Query';
     mineSykmeldte?: Maybe<Array<PreviewSykmeldt>>;
     soknad?: Maybe<Soknad>;
     sykmelding?: Maybe<Sykmelding>;
@@ -159,13 +136,13 @@ export enum ReadType {
 }
 
 export type Reisetilskudd = {
-    __typename?: 'Reisetilskudd';
+    __typename: 'Reisetilskudd';
     fom: Scalars['LocalDate'];
     tom: Scalars['LocalDate'];
 };
 
 export type Soknad = {
-    __typename?: 'Soknad';
+    __typename: 'Soknad';
     details: SoknadDetails;
     fnr: Scalars['String'];
     id: Scalars['ID'];
@@ -178,7 +155,7 @@ export type Soknad = {
 };
 
 export type SoknadDetails = {
-    __typename?: 'SoknadDetails';
+    __typename: 'SoknadDetails';
     status: SoknadsstatusEnum;
     type: SoknadstypeEnum;
 };
@@ -204,7 +181,7 @@ export enum SoknadstypeEnum {
 }
 
 export type Sykmelding = {
-    __typename?: 'Sykmelding';
+    __typename: 'Sykmelding';
     arbeidsforEtterPeriode?: Maybe<Scalars['Boolean']>;
     arbeidsgiver: Arbeidsgiver;
     behandler: Behandler;
@@ -221,7 +198,7 @@ export type Sykmelding = {
 };
 
 export type Virksomhet = {
-    __typename?: 'Virksomhet';
+    __typename: 'Virksomhet';
     navn: Scalars['String'];
     orgnummer: Scalars['String'];
 };
@@ -230,80 +207,80 @@ export type MarkSoknadReadMutationVariables = Exact<{
     soknadId: Scalars['ID'];
 }>;
 
-export type MarkSoknadReadMutation = { __typename?: 'Mutation'; read?: boolean | null | undefined };
+export type MarkSoknadReadMutation = { __typename: 'Mutation'; read?: boolean | null | undefined };
 
 export type MarkSykmeldingReadMutationVariables = Exact<{
     sykmeldingId: Scalars['ID'];
 }>;
 
-export type MarkSykmeldingReadMutation = { __typename?: 'Mutation'; read?: boolean | null | undefined };
+export type MarkSykmeldingReadMutation = { __typename: 'Mutation'; read?: boolean | null | undefined };
 
-export type SoknadFragment = { __typename?: 'Soknad'; id: string; fnr: string; lest: boolean };
+export type SoknadFragment = { __typename: 'Soknad'; id: string; fnr: string; lest: boolean };
 
 export type SoknadByIdQueryVariables = Exact<{
     soknadId: Scalars['ID'];
 }>;
 
 export type SoknadByIdQuery = {
-    __typename?: 'Query';
-    soknad?: { __typename?: 'Soknad'; id: string; fnr: string; lest: boolean } | null | undefined;
+    __typename: 'Query';
+    soknad?: { __typename: 'Soknad'; id: string; fnr: string; lest: boolean } | null | undefined;
 };
 
-export type SykmeldingFragment = { __typename?: 'Sykmelding'; id: string; fnr: string; lest: boolean };
+export type SykmeldingFragment = { __typename: 'Sykmelding'; id: string; fnr: string; lest: boolean };
 
 export type SykmeldingByIdQueryVariables = Exact<{
     sykmeldingId: Scalars['ID'];
 }>;
 
 export type SykmeldingByIdQuery = {
-    __typename?: 'Query';
-    sykmelding?: { __typename?: 'Sykmelding'; id: string; fnr: string; lest: boolean } | null | undefined;
+    __typename: 'Query';
+    sykmelding?: { __typename: 'Sykmelding'; id: string; fnr: string; lest: boolean } | null | undefined;
 };
 
 export type PreviewSykmeldingFragment = {
-    __typename?: 'PreviewSykmelding';
+    __typename: 'PreviewSykmelding';
     id: string;
-    fom: any;
-    tom: any;
+    fom: string;
+    tom: string;
     lest: boolean;
     type: string;
 };
 
 export type PreviewSoknadFragment = {
-    __typename?: 'PreviewSoknad';
+    __typename: 'PreviewSoknad';
     id: string;
-    fom?: any | null | undefined;
-    tom?: any | null | undefined;
+    fom?: string | null | undefined;
+    tom?: string | null | undefined;
     lest: boolean;
     status: SoknadsstatusEnum;
-    sendtDato?: any | null | undefined;
+    sendtDato?: string | null | undefined;
     sykmeldingId?: string | null | undefined;
 };
 
 export type PreviewSykmeldtFragment = {
-    __typename?: 'PreviewSykmeldt';
+    __typename: 'PreviewSykmeldt';
     fnr: string;
     navn: string;
     orgnummer: string;
     friskmeldt: boolean;
     narmestelederId: string;
-    startdatoSykefravar: any;
+    startdatoSykefravar: string;
     previewSykmeldinger: Array<{
-        __typename?: 'PreviewSykmelding';
+        __typename: 'PreviewSykmelding';
         id: string;
-        fom: any;
-        tom: any;
+        fom: string;
+        tom: string;
         lest: boolean;
         type: string;
     }>;
     previewSoknader: Array<{
-        __typename?: 'PreviewSoknad';
+        __typename: 'PreviewSoknad';
         id: string;
-        fom?: any | null | undefined;
-        tom?: any | null | undefined;
+        fom?: string | null | undefined;
+        tom?: string | null | undefined;
         lest: boolean;
         status: SoknadsstatusEnum;
-        sendtDato?: any | null | undefined;
+        sendtDato?: string | null | undefined;
         sykmeldingId?: string | null | undefined;
     }>;
 };
@@ -311,32 +288,32 @@ export type PreviewSykmeldtFragment = {
 export type MineSykmeldteQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MineSykmeldteQuery = {
-    __typename?: 'Query';
+    __typename: 'Query';
     mineSykmeldte?:
         | Array<{
-              __typename?: 'PreviewSykmeldt';
+              __typename: 'PreviewSykmeldt';
               fnr: string;
               navn: string;
               orgnummer: string;
               friskmeldt: boolean;
               narmestelederId: string;
-              startdatoSykefravar: any;
+              startdatoSykefravar: string;
               previewSykmeldinger: Array<{
-                  __typename?: 'PreviewSykmelding';
+                  __typename: 'PreviewSykmelding';
                   id: string;
-                  fom: any;
-                  tom: any;
+                  fom: string;
+                  tom: string;
                   lest: boolean;
                   type: string;
               }>;
               previewSoknader: Array<{
-                  __typename?: 'PreviewSoknad';
+                  __typename: 'PreviewSoknad';
                   id: string;
-                  fom?: any | null | undefined;
-                  tom?: any | null | undefined;
+                  fom?: string | null | undefined;
+                  tom?: string | null | undefined;
                   lest: boolean;
                   status: SoknadsstatusEnum;
-                  sendtDato?: any | null | undefined;
+                  sendtDato?: string | null | undefined;
                   sykmeldingId?: string | null | undefined;
               }>;
           }>
@@ -347,8 +324,8 @@ export type MineSykmeldteQuery = {
 export type VirksomheterQueryVariables = Exact<{ [key: string]: never }>;
 
 export type VirksomheterQuery = {
-    __typename?: 'Query';
-    virksomheter: Array<{ __typename?: 'Virksomhet'; orgnummer: string; navn: string }>;
+    __typename: 'Query';
+    virksomheter: Array<{ __typename: 'Virksomhet'; orgnummer: string; navn: string }>;
 };
 
 export const SoknadFragmentDoc = `
