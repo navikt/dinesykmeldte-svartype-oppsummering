@@ -4576,7 +4576,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:7.0.1, cosmiconfig@npm:^7.0.0":
+"cosmiconfig@npm:7.0.1, cosmiconfig@npm:^7.0.0, cosmiconfig@npm:^7.0.1":
   version: 7.0.1
   resolution: "cosmiconfig@npm:7.0.1"
   dependencies:
@@ -5116,7 +5116,7 @@ __metadata:
     micro: ^9.3.4
     next: 12.0.7
     next-compose-plugins: ^2.2.1
-    next-logger: ^2.2.0
+    next-logger: 3.0.0-beta.2
     next-router-mock: ^0.6.3
     nock: ^13.2.1
     node-cache: ^5.1.2
@@ -9243,14 +9243,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-logger@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "next-logger@npm:2.2.0"
+"next-logger@npm:3.0.0-beta.2":
+  version: 3.0.0-beta.2
+  resolution: "next-logger@npm:3.0.0-beta.2"
   dependencies:
+    cosmiconfig: ^7.0.1
     pino: ^7.0.2
   peerDependencies:
     next: ">=9.0.0"
-  checksum: c38351e4af0723033063fbe8853ca478f947d128f2bee332c075abbe53bd12238665ca0abb76ec16b61fb78b664f926e9a7f73d51a57ff2c91798c0f27fd5d35
+  checksum: 2861568d4c73b05be4b491a349ffe9fd1e38c1df1f0b03ca053eaba42c9f44b2b2981026f71499a3ef6f3195d16f260a202b84ba07b757bafed0dedf94550c9a
   languageName: node
   linkType: hard
 

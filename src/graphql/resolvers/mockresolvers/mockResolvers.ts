@@ -1,4 +1,3 @@
-import { logger } from '../../../utils/logger';
 import {
     MutationResolvers,
     PeriodeEnum,
@@ -12,8 +11,6 @@ import {
 
 import * as mockData from './mockData';
 import { markSoknadRead, markSykmeldingRead } from './mockData';
-
-logger.warn('-- Using mock resolvers');
 
 const Query: QueryResolvers = {
     virksomheter: async () => {
