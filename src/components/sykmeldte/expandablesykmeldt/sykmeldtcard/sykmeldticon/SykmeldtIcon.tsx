@@ -15,8 +15,14 @@ function SykmeldtIcon({ sykmeldt, notification }: Props): JSX.Element {
     const iconVariant = getIconVariant(sykmeldt, notification);
 
     return (
-        <div className={cn(styles.listItemPeopleIconWrapper, styles[iconVariant])}>
-            <SykmeldtCardIcon variant={iconVariant} />
+        <div
+            className={cn(styles.listItemPeopleIconWrapper, {
+                [styles.sykmeldt]: iconVariant === 'sykmeldt',
+                [styles.notify]: iconVariant === 'notify',
+                [styles.friskmeldt]: iconVariant === 'friskmeldt',
+            })}
+        >
+            <SykmeldtCardIcon id={sykmeldt.narmestelederId} variant={iconVariant} />
         </div>
     );
 }
@@ -33,14 +39,22 @@ function getIconVariant(sykmeldt: PreviewSykmeldtFragment, notification: boolean
     }
 }
 
-function SykmeldtCardIcon({ variant }: { variant: IconVariant }) {
+function SykmeldtCardIcon({ id, variant }: { id: string; variant: IconVariant }): JSX.Element {
     switch (variant) {
         case 'notify':
-            return <DialogReportFilled fontSize="28px" focusable={false} color="var(--navds-color-red)" />;
+            return (
+                <DialogReportFilled
+                    title="Sykmeldt med varsel"
+                    titleId={`sykmeldt-${id}`}
+                    fontSize="28px"
+                    focusable={false}
+                    color="var(--navds-color-red)"
+                />
+            );
         case 'sykmeldt':
-            return <Bandage fontSize="28px" focusable={false} />;
+            return <Bandage title="Sykmeldt" titleId={`sykmeldt-${id}`} fontSize="28px" focusable={false} />;
         case 'friskmeldt':
-            return <SuccessStroke fontSize="28px" focusable={false} />;
+            return <SuccessStroke title="Friskmeldt" titleId={`sykmeldt-${id}`} fontSize="28px" focusable={false} />;
     }
 }
 

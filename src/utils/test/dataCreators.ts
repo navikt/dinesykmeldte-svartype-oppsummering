@@ -12,9 +12,11 @@ import {
     PreviewSykmeldingFragment,
     PreviewSykmeldtFragment,
     SoknadByIdQuery,
+    SykmeldingByIdQuery,
     SykmeldingFragment,
     SykmeldingPeriode_AktivitetIkkeMulig_Fragment,
     SykmeldingPeriode_Gradert_Fragment,
+    VirksomheterQuery,
 } from '../../graphql/queries/react-query.generated';
 
 export function createPreviewSendtSoknad(
@@ -150,6 +152,16 @@ export function createPreviewSykmeldt(overrides?: Partial<PreviewSykmeldtFragmen
     };
 }
 
+export function createVirksomhet(
+    overrides?: Partial<VirksomheterQuery['virksomheter'][0]>,
+): VirksomheterQuery['virksomheter'][0] {
+    return {
+        navn: 'Virksomhet 1',
+        orgnummer: '123456789',
+        ...overrides,
+    };
+}
+
 interface DehydratedQuery<Data> {
     queryHash: string;
     queryKey: QueryKey;
@@ -182,6 +194,68 @@ export function createMineSykmeldtePrefetchState(
     };
 }
 
+export function createSykmeldingByIdPrefetchState(
+    id: string,
+    overrides?: Partial<QueryState<SykmeldingByIdQuery>>,
+): DehydratedQuery<SykmeldingByIdQuery> {
+    return {
+        state: {
+            data: {
+                sykmelding: {
+                    ...createSykmelding(),
+                    navn: 'Liten Kopp',
+                    startdatoSykefravar: '2021-11-02',
+                    perioder: [
+                        {
+                            ...createAktivitetIkkeMuligPeriode({
+                                fom: '2021-11-02',
+                                tom: '2021-11-03',
+                            }),
+                        },
+                        {
+                            ...createGradertPeriode({
+                                fom: '2021-11-04',
+                                tom: '2021-11-05',
+                            }),
+                        },
+                        {
+                            __typename: 'Avventende',
+                            fom: '2021-11-06',
+                            tom: '2021-11-07',
+                            tilrettelegging: 'Må ha ekstra lange pauser',
+                        },
+                        {
+                            __typename: 'Behandlingsdager',
+                            fom: '2021-11-09',
+                            tom: '2021-11-10',
+                            behandlingsdager: 1,
+                        },
+                        {
+                            __typename: 'Reisetilskudd',
+                            fom: '2021-11-12',
+                            tom: '2021-11-13',
+                        },
+                    ],
+                },
+                ...overrides,
+            },
+            dataUpdateCount: 1,
+            dataUpdatedAt: 1638955196656,
+            error: null,
+            errorUpdateCount: 0,
+            errorUpdatedAt: 0,
+            fetchFailureCount: 0,
+            fetchMeta: null,
+            isFetching: false,
+            isInvalidated: false,
+            isPaused: false,
+            status: 'success',
+        },
+        queryKey: ['SykmeldingById', { sykmeldingId: id }],
+        queryHash: `["SykmeldingById",{"sykmeldingId":"${id}"}]`,
+    };
+}
+
 export function createSoknadByIdPrefetchState(
     id: string,
     overrides?: Partial<QueryState<SoknadByIdQuery>>,
@@ -206,6 +280,32 @@ export function createSoknadByIdPrefetchState(
         },
         queryKey: ['SoknadById', { soknadId: id }],
         queryHash: `["SoknadById",{"soknadId":"${id}"}]`,
+    };
+}
+
+export function createVirksomheterPrefetchState(
+    overrides?: Partial<QueryState<VirksomheterQuery>>,
+): DehydratedQuery<VirksomheterQuery> {
+    return {
+        state: {
+            data: {
+                virksomheter: [createVirksomhet()],
+            },
+            dataUpdateCount: 1,
+            dataUpdatedAt: 1642510330880,
+            error: null,
+            errorUpdateCount: 0,
+            errorUpdatedAt: 0,
+            fetchFailureCount: 0,
+            fetchMeta: null,
+            isFetching: false,
+            isInvalidated: false,
+            isPaused: false,
+            status: 'success',
+            ...overrides,
+        },
+        queryKey: ['Virksomheter'],
+        queryHash: '["Virksomheter"]',
     };
 }
 

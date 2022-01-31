@@ -6,6 +6,8 @@ import {
     createDehydratedState,
     createMineSykmeldtePrefetchState,
     createPreviewSykmeldt,
+    createVirksomhet,
+    createVirksomheterPrefetchState,
 } from '../../utils/test/dataCreators';
 
 import SykmeldteList from './SykmeldteList';
@@ -14,7 +16,9 @@ describe('SykmeldteList', () => {
     it('should show loading spinner', () => {
         nock().post('/api/graphql', { query: useMineSykmeldteQuery.document }).reply(200, { data: [] });
 
-        render(<SykmeldteList />);
+        render(<SykmeldteList />, {
+            state: createDehydratedState({ queries: [createVirksomheterPrefetchState()] }),
+        });
 
         expect(screen.getByTitle('Laster dine ansatte')).toBeInTheDocument();
     });
@@ -29,7 +33,9 @@ describe('SykmeldteList', () => {
                 data: null,
             });
 
-        render(<SykmeldteList />);
+        render(<SykmeldteList />, {
+            state: createDehydratedState({ queries: [createVirksomheterPrefetchState()] }),
+        });
 
         expect(await screen.findByText('Klarte ikke å hente ansatte: Something went wrong')).toBeInTheDocument();
     });
@@ -48,14 +54,18 @@ describe('SykmeldteList', () => {
                 },
             });
 
-        render(<SykmeldteList />);
+        render(<SykmeldteList />, {
+            state: createDehydratedState({ queries: [createVirksomheterPrefetchState()] }),
+        });
 
         expect(await screen.findByText('Kari Normann')).toBeInTheDocument();
     });
 
     it('should expand and close the panel when clicked', () => {
         render(<SykmeldteList />, {
-            state: createDehydratedState({ queries: [createMineSykmeldtePrefetchState()] }),
+            state: createDehydratedState({
+                queries: [createMineSykmeldtePrefetchState(), createVirksomheterPrefetchState()],
+            }),
         });
 
         userEvent.click(screen.getByRole('button', { name: /Ola Normann/ }));
@@ -67,5 +77,33 @@ describe('SykmeldteList', () => {
 
         expect(screen.queryByRole('link', { name: /Sykmeldinger/ })).not.toBeInTheDocument();
         expect(screen.queryByRole('link', { name: /Søknader/ })).not.toBeInTheDocument();
+    });
+
+    it('should filter by the active virksomhet', () => {
+        render(<SykmeldteList />, {
+            state: createDehydratedState({
+                queries: [
+                    createMineSykmeldtePrefetchState({
+                        data: {
+                            mineSykmeldte: [
+                                createPreviewSykmeldt({ navn: 'Mr. Show', orgnummer: 'org-1' }),
+                                createPreviewSykmeldt({ navn: 'Ms. Hide', orgnummer: 'org-2' }),
+                            ],
+                        },
+                    }),
+                    createVirksomheterPrefetchState({
+                        data: {
+                            virksomheter: [
+                                createVirksomhet({ orgnummer: 'org-1' }),
+                                createVirksomhet({ orgnummer: 'org-2' }),
+                            ],
+                        },
+                    }),
+                ],
+            }),
+        });
+
+        expect(screen.getByRole('heading', { name: 'Mr. Show' })).toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Ms. Hide' })).not.toBeInTheDocument();
     });
 });

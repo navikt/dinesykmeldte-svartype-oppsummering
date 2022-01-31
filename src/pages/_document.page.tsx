@@ -1,7 +1,6 @@
 import React from 'react';
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
 import { Components, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr';
-import { PageHeader } from '@navikt/ds-react';
 
 import { getPublicEnv } from '../utils/env';
 import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs';
@@ -9,7 +8,7 @@ import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs';
 const publicEnv = getPublicEnv();
 
 // The 'head'-field of the document initialProps contains data from <head> (meta-tags etc)
-const getDocumentParameter = (initialProps: DocumentInitialProps, name: string) => {
+const getDocumentParameter = (initialProps: DocumentInitialProps, name: string): string => {
     return initialProps.head?.find((element) => element?.props?.name === name)?.props?.content;
 };
 
@@ -60,7 +59,6 @@ class MyDocument extends Document<Props> {
                 </Head>
                 <body>
                     <Decorator.Header />
-                    <PageHeader>Dine Sykmeldte</PageHeader>
                     <Main />
                     <Decorator.Footer />
                     <Decorator.Scripts />
