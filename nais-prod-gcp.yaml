@@ -10,6 +10,10 @@ spec:
   port: 3000
   ingresses:
     - 'https://www.nav.no/arbeidsgiver/sykmeldte'
+  accessPolicy:
+    outbound:
+      rules:
+        - application: dinesykmeldte-backend
   idporten:
     enabled: true
     sidecar:
