@@ -8,6 +8,7 @@ import {
     createMineSykmeldtePrefetchState,
     createPreviewSykmelding,
     createPreviewSykmeldt,
+    createSykmeldingerByIdsPrefetchState,
     createVirksomhet,
     createVirksomheterPrefetchState,
     DehydratedQuery,
@@ -57,7 +58,11 @@ describe('SykmeldteList', () => {
     });
 
     it('should expand and close the panel when clicked', () => {
-        setup([createVirksomheterPrefetchState(), createMineSykmeldtePrefetchState()]);
+        setup([
+            createVirksomheterPrefetchState(),
+            createMineSykmeldtePrefetchState(),
+            createSykmeldingerByIdsPrefetchState(['default-sykmelding-1']),
+        ]);
 
         userEvent.click(screen.getByRole('button', { name: /Ola Normann/ }));
 
@@ -68,6 +73,24 @@ describe('SykmeldteList', () => {
 
         expect(screen.queryByRole('link', { name: /Sykmeldinger/ })).not.toBeInTheDocument();
         expect(screen.queryByRole('link', { name: /Søknader/ })).not.toBeInTheDocument();
+    });
+
+    it('should expand sykmelding periode summary and show content', () => {
+        setup([
+            createVirksomheterPrefetchState(),
+            createMineSykmeldtePrefetchState(),
+            createSykmeldingerByIdsPrefetchState(['default-sykmelding-1']),
+        ]);
+
+        userEvent.click(screen.getByRole('button', { name: /Ola Normann/ }));
+        userEvent.click(screen.getByRole('button', { name: /Ola er 100% sykmeldt/ }));
+
+        const table = within(screen.getByRole('table'));
+        const cells = table.getAllByRole('cell');
+
+        expect(cells[0]).toHaveTextContent('8 - 15. august 2021');
+        expect(cells[1]).toHaveTextContent('100%');
+        expect(cells[2]).toHaveTextContent('Ferdig');
     });
 
     it('should filter by the active virksomhet', () => {

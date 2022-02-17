@@ -6,16 +6,18 @@ import { PreviewSykmeldtFragment } from '../../../graphql/queries/react-query.ge
 
 import SykmeldtCard from './sykmeldtcard/SykmeldtCard';
 import SykmeldtContent from './sykmeldtcontent/SykmeldtContent';
+import ExpandableSykmeldtSummary from './expandablesykmeldtsummary/ExpandableSykmeldtSummary';
 import styles from './ExpandableSykmeldt.module.css';
 
 interface Props {
     sykmeldt: PreviewSykmeldtFragment;
     expanded: boolean;
-    onClick: (id: string) => void;
+    periodsExpanded: boolean;
+    onClick: (id: string, where: 'root' | 'periods') => void;
     notification: boolean;
 }
 
-function ExpandableSykmeldt({ sykmeldt, expanded, onClick, notification }: Props): JSX.Element {
+function ExpandableSykmeldt({ sykmeldt, expanded, periodsExpanded, onClick, notification }: Props): JSX.Element {
     return (
         <>
             <Accordion>
@@ -27,12 +29,17 @@ function ExpandableSykmeldt({ sykmeldt, expanded, onClick, notification }: Props
                         id={`sykmeldt-accordion-header-${sykmeldt.narmestelederId}`}
                         className={styles.accordionHeader}
                         onClick={() => {
-                            onClick(sykmeldt.narmestelederId);
+                            onClick(sykmeldt.narmestelederId, 'root');
                         }}
                     >
                         <SykmeldtCard sykmeldt={sykmeldt} notification={notification} />
                     </Accordion.Header>
                     <Accordion.Content className={styles.accordionContent}>
+                        <ExpandableSykmeldtSummary
+                            onClick={onClick}
+                            expanded={periodsExpanded}
+                            previewSykmeldt={sykmeldt}
+                        />
                         <SykmeldtContent sykmeldt={sykmeldt} notification={notification} />
                     </Accordion.Content>
                 </Accordion.Item>

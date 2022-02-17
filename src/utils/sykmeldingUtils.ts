@@ -1,3 +1,6 @@
+import { isFuture, parseISO, formatDistanceToNowStrict, isWithinInterval } from 'date-fns';
+import { nb } from 'date-fns/locale';
+
 import { SykmeldingPeriodeFragment } from '../graphql/queries/react-query.generated';
 
 import { diffInDays } from './dateUtils';
@@ -19,4 +22,36 @@ export function getSykmeldingPeriodDescription(period: SykmeldingPeriodeFragment
         case 'Reisetilskudd':
             return `Reisetilskudd i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
     }
+}
+
+export function getShortSykmeldingPeriodDescription(period: SykmeldingPeriodeFragment): string {
+    switch (period.__typename) {
+        case 'AktivitetIkkeMulig':
+            return `100%`;
+        case 'Gradert':
+            return `${period.grad}%`;
+        case 'Behandlingsdager':
+            return `Behandlingsdager`;
+        case 'Avventende':
+            return `Avventende`;
+        case 'Reisetilskudd':
+            return `Reisetilskudd`;
+    }
+}
+
+export function getRelativeSykmeldingPeriodStatus(period: SykmeldingPeriodeFragment): string {
+    const fom = parseISO(period.fom);
+    const tom = parseISO(period.tom);
+
+    if (isFuture(fom)) {
+        return `Starter om ${formatDistanceToNowStrict(fom, { locale: nb })}`;
+    } else if (isWithinInterval(new Date(), { start: fom, end: tom })) {
+        return `${formatDistanceToNowStrict(fom, { locale: nb })} gjenstår`;
+    } else {
+        return `Ferdig`;
+    }
+}
+
+export function createPeriodeKey(periode: SykmeldingPeriodeFragment): string {
+    return `${periode.fom}-${periode.tom}`;
 }
