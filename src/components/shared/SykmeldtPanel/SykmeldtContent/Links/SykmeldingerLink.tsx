@@ -1,4 +1,4 @@
-import { Bandage } from '@navikt/ds-icons';
+import { Bandage, BandageFilled } from '@navikt/ds-icons';
 import React from 'react';
 
 import { PreviewSykmeldtFragment } from '../../../../../graphql/queries/react-query.generated';
@@ -22,7 +22,7 @@ function SykmeldingerLink({ sykmeldtId, sykmeldinger }: Props): JSX.Element {
         return (
             <LinkPanel
                 href={`/sykmeldt/${sykmeldtId}/sykmelding/${unreadItems[0].id}`}
-                Icon={Bandage}
+                Icon={BandageFilled}
                 description={`1 ulest sykmelding`}
                 notify={{
                     notify: true,
@@ -36,7 +36,7 @@ function SykmeldingerLink({ sykmeldtId, sykmeldinger }: Props): JSX.Element {
         return (
             <LinkPanel
                 href={`/sykmeldt/${sykmeldtId}/sykmeldinger`}
-                Icon={Bandage}
+                Icon={BandageFilled}
                 description={`${unreadItems.length} uleste sykmeldinger`}
                 notify={{
                     notify: true,

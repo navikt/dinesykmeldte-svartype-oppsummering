@@ -1,4 +1,4 @@
-import { Task } from '@navikt/ds-icons';
+import { Task, TaskFilled } from '@navikt/ds-icons';
 import React from 'react';
 
 import { PreviewSykmeldtFragment } from '../../../../../graphql/queries/react-query.generated';
@@ -23,7 +23,7 @@ function SoknaderLink({ sykmeldtId, soknader }: Props): JSX.Element {
         return (
             <LinkPanel
                 href={`/sykmeldt/${sykmeldtId}/soknad/${unreadItems[0].id}`}
-                Icon={Task}
+                Icon={TaskFilled}
                 description={`1 ulest søknad`}
                 notify={{
                     notify: true,
@@ -37,7 +37,7 @@ function SoknaderLink({ sykmeldtId, soknader }: Props): JSX.Element {
         return (
             <LinkPanel
                 href={`/sykmeldt/${sykmeldtId}/soknader`}
-                Icon={Task}
+                Icon={TaskFilled}
                 description={`${unreadItems.length} uleste søknader`}
                 notify={{
                     notify: true,

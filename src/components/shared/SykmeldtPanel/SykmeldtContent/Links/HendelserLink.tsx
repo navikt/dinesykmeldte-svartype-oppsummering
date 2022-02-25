@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog } from '@navikt/ds-icons';
+import { Dialog, DialogFilled } from '@navikt/ds-icons';
 
 import { HendelseFragment } from '../../../../../graphql/queries/react-query.generated';
 import LinkPanel from '../../../links/LinkPanel';
@@ -12,14 +12,9 @@ interface Props {
 }
 
 const HendelserLink = ({ sykmeldtId, hendelser }: Props): JSX.Element => {
-    const sharedProps = {
-        Icon: Dialog,
-        external: true,
-    };
-
     if (!hendelser.length) {
         return (
-            <LinkPanel {...sharedProps} href={`/dialogmoter/${sykmeldtId}`}>
+            <LinkPanel Icon={Dialog} external href={`/dialogmoter/${sykmeldtId}`}>
                 Dialogmøter
             </LinkPanel>
         );
@@ -27,7 +22,8 @@ const HendelserLink = ({ sykmeldtId, hendelser }: Props): JSX.Element => {
 
     return (
         <LinkPanel
-            {...sharedProps}
+            Icon={DialogFilled}
+            external
             href={`/dialogmoter/${sykmeldtId}?hendelser=${hendelser.map((it) => it.id).join('&hendelser=')}`}
             notify={{
                 notify: true,
