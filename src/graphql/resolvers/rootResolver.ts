@@ -32,6 +32,9 @@ const Mutation: MutationResolvers = {
     read: async (_, args, context) => {
         return mineSykmeldteService.markRead(args.type, args.id, context.accessToken);
     },
+    unlinkSykmeldt: async (_, args, context) => {
+        return mineSykmeldteService.unlinkSykmeldt(args.sykmeldtId, context.accessToken);
+    },
 };
 
 const resolvers: Partial<Resolvers> = {
