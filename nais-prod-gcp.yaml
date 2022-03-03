@@ -45,6 +45,6 @@ spec:
     - name: DINE_SYKMELDTE_BACKEND_URL
       value: https://dinesykmeldte-backend.intern.nav.no
     - name: ENABLE_SENTRY
-      value: true
+      value: 'true'
     - name: ASSET_PREFIX
       value: "https://teamsykmelding-static-files.nav.no/dinesykmeldte"
