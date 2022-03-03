@@ -52,7 +52,7 @@ function getDialogmoterUrl(narmestelederId: string): string {
     if (isDevOrDemo) {
         return `https://dialogmotearbeidsgiver.labs.nais.io/syk/dialogmotearbeidsgiver/${narmestelederId}`;
     } else {
-        return `/syk/dialogmotearbeidsgiver/${narmestelederId}`;
+        return `/syk/dialogmoter/arbeidsgiver/${narmestelederId}`;
     }
 }
 
