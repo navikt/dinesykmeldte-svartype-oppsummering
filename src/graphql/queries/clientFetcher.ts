@@ -2,7 +2,8 @@ import { logger } from '../../utils/logger';
 
 export function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
     return async (): Promise<TData> => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/graphql` as string, {
+        const prefix = process.env.NODE_ENV === 'test' ? 'http://localhost:3000' : '';
+        const res = await fetch(`${prefix}${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/graphql` as string, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

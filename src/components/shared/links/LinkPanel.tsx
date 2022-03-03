@@ -69,6 +69,8 @@ export function LinkPanel({
     );
 
     if (external) {
+        const isRelativeExternal = !href.toString().startsWith('https://');
+        const url = isRelativeExternal ? `${process.env.NEXT_PUBLIC_BASE_PATH}${href.toString()}` : href.toString();
         return (
             <DsLinkPanel
                 className={cn(styles.dsLinkPanel, {
@@ -76,7 +78,7 @@ export function LinkPanel({
                     [styles.dsLinkPanelNotifyBackground]: shouldNotifyBg,
                 })}
                 target="_blank"
-                href={href.toString()}
+                href={url}
                 rel="noopener noreferrer"
             >
                 {panel}

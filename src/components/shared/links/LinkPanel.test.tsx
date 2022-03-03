@@ -39,4 +39,54 @@ describe('LinkPanel', () => {
         expect(linkPanel).toHaveTextContent(/100% i 31 dager/);
         expect(linkPanel).toHaveTextContent(/Søknad er ikke sendt/);
     });
+
+    it('external link should have right attributes', () => {
+        render(
+            <LinkPanel
+                tag={
+                    <Tag variant="warning" size="small">
+                        Søknad er ikke sendt
+                    </Tag>
+                }
+                description="100% i 31 dager"
+                notify
+                detail="11. juni - 17. august"
+                Icon={Bandage}
+                href="https://example.com/test/url"
+                external
+            >
+                Søknad om sykepenger
+            </LinkPanel>,
+        );
+
+        const linkPanel = screen.getByRole('link', { name: /Søknad om sykepenger/ });
+        expect(linkPanel).toHaveAttribute('target', '_blank');
+        expect(linkPanel).toHaveAttribute('rel', 'noopener noreferrer');
+        expect(linkPanel).toHaveAttribute('href', 'https://example.com/test/url');
+    });
+
+    it('external link with relative href should prepend basepath', () => {
+        render(
+            <LinkPanel
+                tag={
+                    <Tag variant="warning" size="small">
+                        Søknad er ikke sendt
+                    </Tag>
+                }
+                description="100% i 31 dager"
+                notify
+                detail="11. juni - 17. august"
+                Icon={Bandage}
+                href="/test/url"
+                external
+            >
+                Søknad om sykepenger
+            </LinkPanel>,
+        );
+
+        const linkPanel = screen.getByRole('link', { name: /Søknad om sykepenger/ });
+        expect(linkPanel).toHaveAttribute('target', '_blank');
+        expect(linkPanel).toHaveAttribute('rel', 'noopener noreferrer');
+        expect(linkPanel).toHaveAttribute('href', '/fake/basepath/test/url');
+    });
 });

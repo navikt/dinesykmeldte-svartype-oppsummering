@@ -10,7 +10,7 @@ describe('DialogmoteLink', () => {
 
         render(<DialogmoteLink sykmeldtId="test-id" dialogmoter={hendelser} />);
 
-        expect(screen.getByRole('link')).toHaveAttribute('href', '/dialogmoter/test-id');
+        expect(screen.getByRole('link')).toHaveAttribute('href', '/fake/basepath/dialogmoter/test-id');
     });
 
     it('should link to redirect with IDs and list tekst', () => {
@@ -24,7 +24,7 @@ describe('DialogmoteLink', () => {
 
         expect(screen.getByRole('link')).toHaveAttribute(
             'href',
-            '/dialogmoter/test-id?hendelser=hendelse-1&hendelser=hendelse-2',
+            '/fake/basepath/dialogmoter/test-id?hendelser=hendelse-1&hendelser=hendelse-2',
         );
         expect(listItems[0]).toHaveTextContent('Hendelse 1 tekst veldig bra');
         expect(listItems[1]).toHaveTextContent('Hendelse 2 tekst noko anna');
