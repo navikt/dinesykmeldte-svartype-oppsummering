@@ -13,21 +13,35 @@ import {
     VirksomheterApiSchema,
 } from './mineSykmeldteSchema';
 
+const getMarkReadPath = (type: ReadType, id: string): string => {
+    switch (type) {
+        case ReadType.Hendelse:
+            return `hendelse/${id}/lest`;
+        case ReadType.Soknad:
+            return `soknad/${id}/lest`;
+        case ReadType.Sykmelding:
+            return `sykmelding/${id}/lest`;
+    }
+};
+
 export async function markRead(type: ReadType, id: string, accessToken: string): Promise<boolean> {
-    const result = await fetchMineSykmeldteBackend({
+    const [result, statusCode] = await fetchMineSykmeldteBackend({
         accessToken,
-        path: `sykmelding/${id}/lest`,
+        path: getMarkReadPath(type, id),
         schema: MessageResponseSchema,
         method: 'PUT',
     });
 
     logger.info(`Marking ${type} with id ${id} as read, resulted in: ${result.message}`);
+    if (statusCode !== 200) {
+        throw new Error(result.message);
+    }
 
     return true;
 }
 
 export async function unlinkSykmeldt(sykmeldtId: string, accessToken: string): Promise<boolean> {
-    const result = await fetchMineSykmeldteBackend({
+    const [result, statusCode] = await fetchMineSykmeldteBackend({
         accessToken,
         path: `narmesteleder/${sykmeldtId}/avkreft`,
         schema: MessageResponseSchema,
@@ -35,24 +49,47 @@ export async function unlinkSykmeldt(sykmeldtId: string, accessToken: string): P
     });
 
     logger.info(`Unlinking ${sykmeldtId} from nærmesteleder, resulted in ${result.message}`);
+    if (statusCode !== 200) {
+        throw new Error(result.message);
+    }
 
     return true;
 }
 
 export async function getVirksomheter(accessToken: string): Promise<Virksomhet[]> {
-    return fetchMineSykmeldteBackend({ accessToken, path: 'virksomheter', schema: VirksomheterApiSchema });
+    const [result] = await fetchMineSykmeldteBackend({
+        accessToken,
+        path: 'virksomheter',
+        schema: VirksomheterApiSchema,
+    });
+
+    return result;
 }
 
 export async function getMineSykmeldte(accessToken: string): Promise<PreviewSykmeldt[]> {
-    return fetchMineSykmeldteBackend({ accessToken, path: 'minesykmeldte', schema: MineSykmeldteApiSchema });
+    const [result] = await fetchMineSykmeldteBackend({
+        accessToken,
+        path: 'minesykmeldte',
+        schema: MineSykmeldteApiSchema,
+    });
+
+    return result;
 }
 
 export async function getSykmelding(sykmeldingId: string, accessToken: string): Promise<Sykmelding> {
-    return fetchMineSykmeldteBackend({ accessToken, path: `sykmelding/${sykmeldingId}`, schema: SykmeldingSchema });
+    const [result] = await fetchMineSykmeldteBackend({
+        accessToken,
+        path: `sykmelding/${sykmeldingId}`,
+        schema: SykmeldingSchema,
+    });
+
+    return result;
 }
 
 export async function getSoknad(soknadId: string, accessToken: string): Promise<Soknad> {
-    return fetchMineSykmeldteBackend({ accessToken, path: `soknad/${soknadId}`, schema: SoknadSchema });
+    const [result] = await fetchMineSykmeldteBackend({ accessToken, path: `soknad/${soknadId}`, schema: SoknadSchema });
+
+    return result;
 }
 
 async function fetchMineSykmeldteBackend<SchemaType extends ZodTypeAny>({
@@ -65,7 +102,7 @@ async function fetchMineSykmeldteBackend<SchemaType extends ZodTypeAny>({
     path: string;
     schema: SchemaType;
     method?: string;
-}): Promise<z.infer<SchemaType>> {
+}): Promise<[result: z.infer<SchemaType>, httpStatus: number]> {
     const tokenX = await getToken(accessToken, getEnv('DINE_SYKMELDTE_BACKEND_SCOPE'));
     if (!tokenX) {
         throw new Error('Unable to exchange token for dinesykmeldte-backend token');
@@ -87,7 +124,7 @@ async function fetchMineSykmeldteBackend<SchemaType extends ZodTypeAny>({
     const responseJson: unknown = await response.json();
     const result = schema.safeParse(responseJson);
     if (result.success) {
-        return result.data;
+        return [result.data, response.status];
     }
 
     logger.error('Unable to parse API result');
