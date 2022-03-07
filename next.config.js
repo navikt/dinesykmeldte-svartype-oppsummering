@@ -14,7 +14,7 @@ module.exports = withPlugins(
                 process.env.ENABLE_SENTRY
                     ? withSentryConfig(nextConfig, {
                           silent: true,
-                          enabled: process.env.NODE_ENV === 'production',
+                          enabled: process.env.NODE_ENV === 'production' && !!process.env.ENABLE_SENTRY,
                       })
                     : nextConfig,
         ],
