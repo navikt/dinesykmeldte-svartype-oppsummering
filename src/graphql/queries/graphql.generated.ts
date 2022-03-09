@@ -526,6 +526,7 @@ export type PreviewSoknad_PreviewKorrigertSoknad_Fragment = {
     sykmeldingId: string;
     fom: string;
     tom: string;
+    lest: boolean;
     korrigererSoknadId: string;
     korrigertBySoknadId?: string | null;
     perioder: Array<{
@@ -616,6 +617,7 @@ export type PreviewSykmeldtFragment = {
               sykmeldingId: string;
               fom: string;
               tom: string;
+              lest: boolean;
               korrigererSoknadId: string;
               korrigertBySoknadId?: string | null;
               perioder: Array<{
@@ -703,6 +705,7 @@ export type MineSykmeldteQuery = {
                   sykmeldingId: string;
                   fom: string;
                   tom: string;
+                  lest: boolean;
                   korrigererSoknadId: string;
                   korrigertBySoknadId?: string | null;
                   perioder: Array<{
@@ -1029,6 +1032,7 @@ export const PreviewSoknadFragmentDoc = {
                         selectionSet: {
                             kind: 'SelectionSet',
                             selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'lest' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'korrigererSoknadId' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'korrigertBySoknadId' } },
                             ],
