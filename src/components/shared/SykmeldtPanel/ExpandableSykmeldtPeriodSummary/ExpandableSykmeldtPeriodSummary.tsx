@@ -1,5 +1,5 @@
 import { Accordion, Loader } from '@navikt/ds-react';
-import { InformationFilled } from '@navikt/ds-icons';
+import { Historic } from '@navikt/ds-icons';
 import { useApolloClient, useQuery } from '@apollo/client';
 
 import { getLatestPeriod } from '../../../../utils/sykmeldtUtils';
@@ -65,7 +65,7 @@ function ExpandableSykmeldtPeriodSummary({ expanded, onClick, previewSykmeldt }:
                             onClick(previewSykmeldt.narmestelederId, 'periods');
                         }}
                     >
-                        <InformationFilled className={styles.infoIcon} />
+                        <Historic className={styles.infoIcon} />
                         {loading && <Loader size="small" variant="interaction" />}
                         {!loading && latestPeriod && (
                             <SummaryHeaderContent
