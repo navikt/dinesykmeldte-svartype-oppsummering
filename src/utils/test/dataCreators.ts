@@ -5,7 +5,6 @@ import { ResultFunction } from '@apollo/client/testing/core/mocking/mockLink';
 
 import {
     ArbeidsrelatertArsakEnum,
-    FravarstypeEnum,
     PreviewSoknad_PreviewFremtidigSoknad_Fragment,
     PreviewSoknad_PreviewKorrigertSoknad_Fragment,
     PreviewSoknad_PreviewNySoknad_Fragment,
@@ -18,7 +17,12 @@ import {
     VirksomheterQuery,
     SoknadFragment,
     DialogmoteFragment,
+    SoknadSporsmalSvartypeEnum,
+    SoknadSporsmalKriterierEnum,
+    PeriodeEnum,
+    SporsmalTagEnum,
 } from '../../graphql/queries/graphql.generated';
+import { PossibleSvarEnum } from '../../components/soknadpanel/SporsmalVarianter/SporsmalVarianter';
 
 export function createPreviewSendtSoknad(
     overrides?: Partial<PreviewSoknad_PreviewSendtSoknad_Fragment>,
@@ -115,11 +119,47 @@ export function createSoknad(overrides?: Partial<SoknadFragment>): SoknadFragmen
         tom: '2021-06-23',
         lest: false,
         korrigertBySoknadId: '525642-4425fg-55226-7gereg-432424fjz',
-        fravar: [
+        perioder: [
             {
-                fom: '2021-11-01',
-                tom: '2021-11-08',
-                type: FravarstypeEnum.Permisjon,
+                fom: '2021-11-08',
+                tom: '2021-11-10',
+                sykmeldingstype: PeriodeEnum.Gradert,
+                sykmeldingsgrad: 50,
+            },
+        ],
+        sporsmal: [
+            {
+                id: '895023532',
+                tag: SporsmalTagEnum.Ferie,
+                min: null,
+                max: null,
+                sporsmalstekst: 'Har du vært på ferie i denne perioden?',
+                undertekst: null,
+                svartype: SoknadSporsmalSvartypeEnum.Checkbox,
+                kriterieForVisningAvUndersporsmal: SoknadSporsmalKriterierEnum.Checked,
+                svar: [
+                    {
+                        verdi: PossibleSvarEnum.NEI,
+                    },
+                ],
+                undersporsmal: [
+                    {
+                        id: '895023532',
+                        tag: SporsmalTagEnum.Permisjon,
+                        min: null,
+                        max: null,
+                        sporsmalstekst: 'Har du hatt permisjon i denne perioden?',
+                        undertekst: null,
+                        svartype: SoknadSporsmalSvartypeEnum.Checkbox,
+                        kriterieForVisningAvUndersporsmal: SoknadSporsmalKriterierEnum.Checked,
+                        svar: [
+                            {
+                                verdi: PossibleSvarEnum.JA,
+                            },
+                        ],
+                        undersporsmal: [],
+                    },
+                ],
             },
         ],
         ...overrides,
