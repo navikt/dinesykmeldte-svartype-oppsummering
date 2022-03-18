@@ -142,7 +142,6 @@ async function fetchMineSykmeldteBackend<SchemaType extends ZodTypeAny>({
         return [result.data, response.status];
     }
 
-    logger.error('Unable to parse API result');
-    logger.error(result.error.message);
+    logger.error(`Unable to parse API result: ${result.error.message}`);
     throw new Error(`Result from API to path ${path} doesn't match the expected shape. ${result.error.message}`);
 }
