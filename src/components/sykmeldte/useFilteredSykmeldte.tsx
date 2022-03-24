@@ -15,7 +15,7 @@ async function fuzzyFilterSykmeldteByName(
 
     const value = filters.name;
     const Fuse = (await import('fuse.js')).default;
-    const fuse = new Fuse(sykmeldte, { keys: ['navn'] });
+    const fuse = new Fuse(sykmeldte, { keys: ['navn'], threshold: 0.4 });
 
     const result = fuse.search(value);
     return result.map((it) => it.item);

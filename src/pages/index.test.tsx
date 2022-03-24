@@ -97,7 +97,7 @@ describe('Index page', () => {
             it('should also filter fuzzily', async () => {
                 setup(sykmeldte);
 
-                userEvent.type(screen.getByRole('textbox', { name: 'Søk på navn' }), 'Ca');
+                userEvent.type(screen.getByRole('textbox', { name: 'Søk på navn' }), 'Facy Sharty');
 
                 await screen.findByText('Lacy Carty');
 
@@ -106,7 +106,7 @@ describe('Index page', () => {
                         .getAllByRole('heading')
                         .slice(2)
                         .map((it) => it.textContent),
-                ).toEqual(['Lacy Carty', 'Marcelina Decker', 'Daanyaal Butler', 'Kaitlin Dotson']);
+                ).toEqual(['Lacy Carty']);
             });
 
             it('should sort by names when changing sort', async () => {
@@ -164,7 +164,7 @@ describe('Index page', () => {
                         .getAllByRole('heading')
                         .slice(2)
                         .map((it) => it.textContent),
-                ).toEqual(['First', 'Second', 'Third', 'Fourth', 'Fifth']),
+                ).toEqual(['Fifth', 'Fourth', 'Third', 'Second', 'First']),
             );
         });
 

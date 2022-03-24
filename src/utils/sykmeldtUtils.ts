@@ -1,4 +1,4 @@
-import { compareAsc, isAfter } from 'date-fns';
+import { compareDesc, isAfter } from 'date-fns';
 
 import { PreviewSykmeldingFragment, PreviewSykmeldtFragment } from '../graphql/queries/graphql.generated';
 
@@ -34,7 +34,7 @@ export function sortByDate(a: PreviewSykmeldtFragment, b: PreviewSykmeldtFragmen
     const latestA = a.previewSykmeldinger.reduce(toLatestTom);
     const latestB = b.previewSykmeldinger.reduce(toLatestTom);
 
-    return compareAsc(toDate(latestA.tom), toDate(latestB.tom));
+    return compareDesc(toDate(latestA.tom), toDate(latestB.tom));
 }
 
 export function sortByName(a: PreviewSykmeldtFragment, b: PreviewSykmeldtFragment): number {
