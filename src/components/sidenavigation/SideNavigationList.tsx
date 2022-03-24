@@ -7,7 +7,7 @@ import { PreviewSykmeldtFragment } from '../../graphql/queries/graphql.generated
 import { isPreviewSoknadNotification } from '../../utils/soknadUtils';
 import { createOppfolgingsplanUrl } from '../shared/SykmeldtPanel/SykmeldtContent/Links/OppfolgingsplanLink';
 
-import { ActiveSubItem, SideNavigationMenuItem } from './SideNavigationMenuItem';
+import { ActiveSubItem, SideNavigationMenuItem, SimpleSideNavigationMenuItem } from './SideNavigationMenuItem';
 import styles from './SideNavigationList.module.css';
 import { useActivePage } from './useActivePage';
 
@@ -52,16 +52,20 @@ function SideNavigationList({
                     icons={{ Normal: Dialog, Notify: DialogFilled }}
                     notify={sykmeldt.dialogmoter.length > 0}
                     href={`/dialogmoter/${sykmeldt.narmestelederId}`}
-                    external
+                    external="proxy"
                 >
                     Dialogmøter
                 </SideNavigationMenuItem>
-                <SideNavigationMenuItem href={createOppfolgingsplanUrl(sykmeldt.narmestelederId)} Icon={Notes} external>
+                <SimpleSideNavigationMenuItem
+                    href={createOppfolgingsplanUrl(sykmeldt.narmestelederId)}
+                    Icon={Notes}
+                    external="relative"
+                >
                     Oppfølgingsplaner
-                </SideNavigationMenuItem>
-                <SideNavigationMenuItem href="/" Icon={CoApplicant} className={styles.lastItem}>
+                </SimpleSideNavigationMenuItem>
+                <SimpleSideNavigationMenuItem href="/" Icon={CoApplicant} className={styles.lastItem}>
                     Dine sykmeldte
-                </SideNavigationMenuItem>
+                </SimpleSideNavigationMenuItem>
             </ul>
         </>
     );
