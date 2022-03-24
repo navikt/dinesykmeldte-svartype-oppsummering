@@ -17,7 +17,7 @@ const OppfolgingsplanLink = ({ sykmeldtId }: Props): JSX.Element => {
 };
 
 export function createOppfolgingsplanUrl(narmestelederId: string): string {
-    if (!isLocalOrDemo) {
+    if (isLocalOrDemo) {
         return `https://oppfolgingsplanarbeidsgiver.labs.nais.io/syk/oppfolgingsplanarbeidsgiver/${narmestelederId}/oppfolgingsplaner`;
     }
 
