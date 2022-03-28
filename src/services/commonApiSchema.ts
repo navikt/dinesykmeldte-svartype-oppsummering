@@ -40,6 +40,8 @@ export const FremtidigSoknad = BasePreviewSoknadSchema.extend({
 export const KorrigertSoknad = BasePreviewSoknadSchema.extend({
     korrigertBySoknadId: z.string(),
     korrigererSoknadId: z.string().nullable(),
+    lest: z.boolean(),
+    sendtDato: LocalDateSchema,
     status: z.literal(SoknadsstatusEnum.Korrigert),
 });
 
