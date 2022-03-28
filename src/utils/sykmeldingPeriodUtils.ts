@@ -1,4 +1,16 @@
-import { startOfDay, formatDistanceToNowStrict, isAfter, isFuture, isPast, isWithinInterval, parseISO } from 'date-fns';
+import {
+    startOfDay,
+    formatDistanceStrict,
+    isAfter,
+    isFuture,
+    isPast,
+    isWithinInterval,
+    parseISO,
+    formatISO,
+    min,
+    max,
+    isToday,
+} from 'date-fns';
 import { nb } from 'date-fns/locale';
 
 import { SykmeldingFragment, SykmeldingPeriodeFragment } from '../graphql/queries/graphql.generated';
@@ -43,11 +55,12 @@ export function getShortSykmeldingPeriodDescription(period: SykmeldingPeriodeFra
 export function getRelativeSykmeldingPeriodStatus(period: SykmeldingPeriodeFragment): string {
     const fom = parseISO(period.fom);
     const tom = parseISO(period.tom);
+    const today = startOfDay(new Date());
 
     if (isFuture(fom)) {
-        return `Starter om ${formatDistanceToNowStrict(fom, { locale: nb })}`;
-    } else if (isWithinInterval(startOfDay(new Date()), { start: fom, end: tom })) {
-        return `${formatDistanceToNowStrict(tom, { locale: nb, unit: 'day' })} gjenstår`;
+        return `Starter om ${formatDistanceStrict(fom, today, { locale: nb, unit: 'day' })}`;
+    } else if (!isToday(tom) && isWithinInterval(today, { start: fom, end: tom })) {
+        return `${formatDistanceStrict(tom, today, { locale: nb, unit: 'day' })} gjenstår`;
     } else {
         return `Ferdig`;
     }
@@ -145,4 +158,12 @@ function toNearest(now: Date) {
         if (isAfter(currentFom, now) && isAfter(currentFom, previousFom)) return current;
         else return previous;
     };
+}
+
+export function getEarliestFom(sykmelding: SykmeldingFragment): string {
+    return formatISO(min(sykmelding.perioder.map((periode) => parseISO(periode.fom))));
+}
+
+export function getLatestTom(sykmelding: SykmeldingFragment): string {
+    return formatISO(max(sykmelding.perioder.map((periode) => parseISO(periode.tom))));
 }
