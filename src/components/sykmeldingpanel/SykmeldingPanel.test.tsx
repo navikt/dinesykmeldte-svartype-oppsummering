@@ -11,7 +11,7 @@ describe('SykmeldingPanel', () => {
 
         const infoSection = within(screen.getByRole('region', { name: 'Opplysninger fra sykmeldingen' }));
         expect(infoSection.getByRole('listitem', { name: 'Sykmeldingen gjelder' })).toHaveTextContent('Test Testysson');
-        expect(infoSection.getByRole('listitem', { name: 'Arbeidsgiver som har skrevet inn' })).toHaveTextContent(
+        expect(infoSection.getByRole('listitem', { name: 'Arbeidsgiver som legen har skrevet inn' })).toHaveTextContent(
             'Eplemostfabrikken AS',
         );
 
