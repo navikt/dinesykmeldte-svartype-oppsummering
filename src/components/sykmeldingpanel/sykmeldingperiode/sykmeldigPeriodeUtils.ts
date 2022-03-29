@@ -1,5 +1,3 @@
-import { compareAsc, parseISO } from 'date-fns';
-
 import {
     ArbeidsrelatertArsakEnum,
     FomTom,
@@ -33,8 +31,4 @@ export function getArbeidsrelatertArsakText(arsak: ArbeidsrelatertArsakEnum): st
         case ArbeidsrelatertArsakEnum.Annet:
             return 'Annen årsak';
     }
-}
-
-export function periodByDate(a: SykmeldingPeriodeFragment, b: SykmeldingPeriodeFragment): number {
-    return compareAsc(parseISO(a.tom), parseISO(b.tom));
 }

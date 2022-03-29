@@ -1,20 +1,21 @@
 import {
-    startOfDay,
+    compareAsc,
+    compareDesc,
     formatDistanceStrict,
+    formatISO,
     isAfter,
     isFuture,
     isPast,
-    isWithinInterval,
-    parseISO,
-    formatISO,
-    min,
-    max,
     isToday,
+    isWithinInterval,
+    max,
+    min,
+    parseISO,
+    startOfDay,
 } from 'date-fns';
 import { nb } from 'date-fns/locale';
 
 import { SykmeldingFragment, SykmeldingPeriodeFragment } from '../graphql/queries/graphql.generated';
-import { periodByDate } from '../components/sykmeldingpanel/sykmeldingperiode/sykmeldigPeriodeUtils';
 
 import { diffInDays, formatDate, formatDateRange, toDate } from './dateUtils';
 
@@ -70,6 +71,14 @@ export function createPeriodeKey(periode: SykmeldingPeriodeFragment): string {
     return `${periode.fom}-${periode.tom}`;
 }
 
+export function periodByDateAsc(a: SykmeldingPeriodeFragment, b: SykmeldingPeriodeFragment): number {
+    return compareAsc(parseISO(a.tom), parseISO(b.tom));
+}
+
+export function periodByDateDesc(a: SykmeldingPeriodeFragment, b: SykmeldingPeriodeFragment): number {
+    return compareDesc(parseISO(a.tom), parseISO(b.tom));
+}
+
 export function formatPeriodsRelative(
     name: string,
     sykmeldinger: SykmeldingFragment[],
@@ -77,7 +86,7 @@ export function formatPeriodsRelative(
 ): { text: string; time: 'past' | 'present' | 'future' } {
     const firstName = name.split(' ')[0];
     const now = new Date();
-    const periods = sykmeldinger.flatMap((it) => it.perioder).sort(periodByDate);
+    const periods = sykmeldinger.flatMap((it) => it.perioder).sort(periodByDateAsc);
     const firstPeriod = periods[0];
     const lastPeriod = periods[periods.length - 1];
     const earliestFom = parseISO(periods[0].fom);
