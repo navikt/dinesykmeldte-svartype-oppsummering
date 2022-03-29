@@ -47,8 +47,8 @@ function VirksomhetPicker({ className }: Props): JSX.Element {
             </Select>
             <HelpText className={styles.helpText} title="vis hjelpetekst angående virksomheter">
                 <div className={styles.helpTextContent}>
-                    Av personvernhensyn er virksomheten synlig i listen inntil fire måneder etter at medarbeiderene er
-                    friskmeldte.
+                    Virksomheten der du er meldt inn som nærmeste leder er synlig i listen inntil 4 måneder etter at
+                    medarbeiderene er friskmeldte.
                 </div>
             </HelpText>
         </div>
