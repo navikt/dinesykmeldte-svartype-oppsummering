@@ -28,7 +28,10 @@ function PaginatedSykmeldteList({ sykmeldte }: Props): JSX.Element {
 
     return (
         <div>
-            <section aria-label={`side ${page + 1} av sykmeldte`} className={styles.paginatedSection}>
+            <section
+                aria-label={`side ${page + 1} av sykmeldte`}
+                className={cn({ [styles.paginatedSection]: shouldPaginate })}
+            >
                 <Grid>
                     {list.map((it, index) => (
                         <Cell
