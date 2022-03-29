@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teamsykmelding
 spec:
-  image: ghcr.io/navikt/dinesykmeldte:47222cb431aa7b4854b3f52d740e5cc495290bef
+  image: {{image}}
   port: 3000
   ingresses:
     - 'https://www-gcp.dev.nav.no/arbeidsgiver/sykmeldte'
@@ -44,4 +44,4 @@ spec:
     - name: DINE_SYKMELDTE_BACKEND_URL
       value: https://dinesykmeldte-backend.dev.intern.nav.no
     - name: ASSET_PREFIX
-      value: "https://teamsykmelding-static-files.dev.nav.no/dinesykmeldte"
+      value: 'https://teamsykmelding-static-files.dev.nav.no/dinesykmeldte'
