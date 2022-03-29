@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teamsykmelding
 spec:
-  image: {{image}}
+  image: ghcr.io/navikt/dinesykmeldte:47222cb431aa7b4854b3f52d740e5cc495290bef
   port: 3000
   ingresses:
     - 'https://www-gcp.dev.nav.no/arbeidsgiver/sykmeldte'
@@ -24,10 +24,10 @@ spec:
   resources:
     limits:
       cpu: 500m
-      memory: 256Mi
+      memory: 512Mi
     requests:
       cpu: 200m
-      memory: 256Mi
+      memory: 512Mi
   tokenx:
     enabled: true
   liveness:
