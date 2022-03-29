@@ -7,12 +7,12 @@ interface Props {
     unsentSoknad: boolean;
 }
 
-const SoknaderVeilederInfo = ({ unsentSoknad }: Props): JSX.Element | null => {
+const SoknaderVeilederInfo = ({ name, unsentSoknad }: Props): JSX.Element | null => {
     if (unsentSoknad) {
         return (
             <Veileder
                 border={false}
-                text="Lisa har fått en søknad om sykepenger til utfylling, men har ikke sendt den inn. Du bør minne om at søknaden skal sendes. Unntaket er hvis den allerede er sendt til NAV på papir."
+                text={`${name} har fått en søknad om sykepenger til utfylling, men har ikke sendt den inn. Du bør minne om at søknaden skal sendes. Unntaket er hvis den allerede er sendt til NAV på papir.`}
             />
         );
     }
