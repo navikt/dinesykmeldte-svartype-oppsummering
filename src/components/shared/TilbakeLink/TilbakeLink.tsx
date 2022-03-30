@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from '@navikt/ds-react';
+import Link from 'next/link';
+import { Link as DsLink } from '@navikt/ds-react';
 import { Back } from '@navikt/ds-icons';
 import cn from 'classnames';
 
@@ -13,9 +14,11 @@ interface TilbakeLinkProps {
 
 function TilbakeLink({ text, marginTop, href }: TilbakeLinkProps): JSX.Element {
     return (
-        <Link className={cn(styles.tilbakeLink, { [styles.marginTop]: marginTop })} href={href}>
-            <Back />
-            {text}
+        <Link href={href} passHref>
+            <DsLink className={cn(styles.tilbakeLink, { [styles.marginTop]: marginTop })}>
+                <Back />
+                {text}
+            </DsLink>
         </Link>
     );
 }
