@@ -34,4 +34,4 @@ export function getPublicEnv(): PublicEnv {
     return publicRuntimeConfig;
 }
 
-export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || process.env.RUNTIME_ENVIRONMENT === 'labs';
+export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || getPublicEnv().runtimeEnv === 'labs';
