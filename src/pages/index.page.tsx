@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { ContentContainer } from '@navikt/ds-react';
+import { Alert, ContentContainer } from '@navikt/ds-react';
 import { CoApplicant } from '@navikt/ds-icons';
 
 import { createSsrApolloClient, prefetchMutlipleQueries, wrapProps } from '../graphql/prefetching';
@@ -14,6 +14,8 @@ import SykmeldteFilter from '../components/sykmeldtefilter/SykmeldteFilter';
 import NarmestelederInfo from '../components/NarmestelederInfo/NarmestelederInfo';
 import { MineSykmeldteDocument, VirksomheterDocument } from '../graphql/queries/graphql.generated';
 
+import styles from './index.module.css';
+
 function Home(): JSX.Element {
     useUpdateBreadcrumbs(() => []);
 
@@ -23,6 +25,12 @@ function Home(): JSX.Element {
                 <title>Dine sykmeldte - nav.no</title>
             </Head>
             <ContentContainer>
+                <div className={styles.tempWarning}>
+                    <Alert variant="info">
+                        I overgangen til ny løsning kan det forekomme feil og mangler. Vi jobber kontinuerlig med å løse
+                        problemer som oppstår.
+                    </Alert>
+                </div>
                 <SykmeldteInfoPanel />
                 <SykmeldteFilter />
                 <SykmeldteList />
