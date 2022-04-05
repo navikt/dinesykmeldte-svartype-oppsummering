@@ -4,6 +4,7 @@ import {
     MineSykmeldteDocument,
     PreviewSykmeldtFragment,
     SykmeldingByIdDocument,
+    VirksomheterDocument,
 } from '../graphql/queries/graphql.generated';
 import { logger } from '../utils/logger';
 
@@ -22,6 +23,8 @@ export function useSykmeldt(): UseSykmeldt {
     const client = useApolloClient();
     const { sykmeldtId } = useParam(RouteLocation.Sykmeldt);
 
+    // Load virksomheter to optimize users navigating to root
+    useQuery(VirksomheterDocument);
     const { data, loading, error } = useQuery(MineSykmeldteDocument, {
         onCompleted: (result) => {
             result.mineSykmeldte?.forEach((it) => {
