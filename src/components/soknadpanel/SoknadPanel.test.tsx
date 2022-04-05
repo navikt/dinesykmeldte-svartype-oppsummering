@@ -126,7 +126,7 @@ describe('SoknadPanel', () => {
                                                         svar: [
                                                             {
                                                                 __typename: 'SoknadSporsmalSvar',
-                                                                verdi: '800',
+                                                                verdi: '85200',
                                                             },
                                                         ],
                                                         undersporsmal: [],
@@ -153,7 +153,7 @@ describe('SoknadPanel', () => {
                     name: 'Hvor mye betaler du vanligvis i måneden for offentlig transport?',
                 }),
             ).toBeInTheDocument();
-            expect(screen.getByRole('listitem', { name: '800 kr' })).toBeInTheDocument();
+            expect(screen.getByRole('listitem', { name: '852 kr' })).toBeInTheDocument();
         });
 
         it('Should show sporsmal for CheckboxGruppe if undersporsmal exists', () => {
@@ -498,6 +498,84 @@ describe('SoknadPanel', () => {
                 }),
             ).toBeInTheDocument();
             expect(screen.getByRole('listitem', { name: '10 prosent' })).toBeInTheDocument();
+        });
+        it('Should show sporsmal for Kvittering with 1 svar', () => {
+            render(
+                <SoknadPanel
+                    soknad={createSoknad({
+                        sporsmal: [
+                            {
+                                __typename: 'SoknadSporsmal',
+                                id: '687375',
+                                tag: SporsmalTagEnum.Kvitteringer,
+                                sporsmalstekst: 'Kvitteringer for reiseutgifter til jobben fra 1. - 24. mai 2020.',
+                                undertekst: null,
+                                svartype: SoknadSporsmalSvartypeEnum.Kvittering,
+                                min: null,
+                                max: null,
+                                kriterieForVisningAvUndersporsmal: null,
+                                svar: [
+                                    {
+                                        __typename: 'SoknadSporsmalSvar',
+                                        verdi: `{"blobId": "9a186e3c-aeeb-4566-a865-15aa9139d364","belop": 133700,"typeUtgift": "OFFENTLIG_TRANSPORT", "opprettet": ""}`,
+                                    },
+                                ],
+                                undersporsmal: [],
+                            },
+                        ],
+                    })}
+                />,
+            );
+
+            expect(
+                screen.getByRole('listitem', {
+                    name: 'Kvitteringer for reiseutgifter til jobben fra 1. - 24. mai 2020.',
+                }),
+            ).toBeInTheDocument();
+            expect(screen.getByText('Du lastet opp 1 utgift på 1337 kr')).toBeInTheDocument();
+        });
+        it('Should show sporsmal for Kvittering with 3 svar', () => {
+            render(
+                <SoknadPanel
+                    soknad={createSoknad({
+                        sporsmal: [
+                            {
+                                __typename: 'SoknadSporsmal',
+                                id: '687375',
+                                tag: SporsmalTagEnum.Kvitteringer,
+                                sporsmalstekst: 'Kvitteringer for reiseutgifter til jobben fra 16. - 18. mai 2021.',
+                                undertekst: null,
+                                svartype: SoknadSporsmalSvartypeEnum.Kvittering,
+                                min: null,
+                                max: null,
+                                kriterieForVisningAvUndersporsmal: null,
+                                svar: [
+                                    {
+                                        __typename: 'SoknadSporsmalSvar',
+                                        verdi: `{"blobId": "43215544","belop": 64500,"typeUtgift": "TAXI", "opprettet": ""}`,
+                                    },
+                                    {
+                                        __typename: 'SoknadSporsmalSvar',
+                                        verdi: `{"blobId": "54316324","belop": 23200,"typeUtgift": "PARKERING", "opprettet": ""}`,
+                                    },
+                                    {
+                                        __typename: 'SoknadSporsmalSvar',
+                                        verdi: `{"blobId": "54135135","belop": 72400,"typeUtgift": "ANNET", "opprettet": ""}`,
+                                    },
+                                ],
+                                undersporsmal: [],
+                            },
+                        ],
+                    })}
+                />,
+            );
+
+            expect(
+                screen.getByRole('listitem', {
+                    name: 'Kvitteringer for reiseutgifter til jobben fra 16. - 18. mai 2021.',
+                }),
+            ).toBeInTheDocument();
+            expect(screen.getByText('Du lastet opp 3 utgifter på til sammen 1601 kr')).toBeInTheDocument();
         });
     });
 });
