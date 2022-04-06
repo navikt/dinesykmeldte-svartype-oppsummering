@@ -19,7 +19,7 @@ describe('SideNavigation', () => {
 
         const menu = within(screen.getByRole('navigation', { name: 'Ola Normanns dokumenter' }));
         expect(menu.getByRole('link', { name: 'Sykmeldinger' })).toHaveClass('activeMenuItem');
-        expect(menu.getByRole('link', { name: 'Søknader om sykmeldinger' })).not.toHaveClass('activeMenuItem');
+        expect(menu.getByRole('link', { name: 'Søknader om sykepenger' })).not.toHaveClass('activeMenuItem');
     });
 
     it('should mark søknader as active when URL is søknad page', () => {
@@ -33,7 +33,7 @@ describe('SideNavigation', () => {
 
         const menu = within(screen.getByRole('navigation', { name: 'Ola Normanns dokumenter' }));
         expect(menu.getByRole('link', { name: 'Sykmeldinger' })).not.toHaveClass('activeMenuItem');
-        expect(menu.getByRole('link', { name: 'Søknader om sykmeldinger' })).toHaveClass('activeMenuItem');
+        expect(menu.getByRole('link', { name: 'Søknader om sykepenger' })).toHaveClass('activeMenuItem');
     });
 
     it('should navigate to correct page when clicked', () => {
@@ -48,7 +48,7 @@ describe('SideNavigation', () => {
         const menu = within(screen.getByRole('navigation', { name: 'Ola Normanns dokumenter' }));
         userEvent.click(menu.getByRole('link', { name: 'Sykmeldinger' }));
         expect(mockRouter.pathname).toEqual('/sykmeldt/[sykmeldtId]/sykmeldinger');
-        userEvent.click(menu.getByRole('link', { name: 'Søknader om sykmeldinger' }));
+        userEvent.click(menu.getByRole('link', { name: 'Søknader om sykepenger' }));
         expect(mockRouter.pathname).toEqual('/sykmeldt/[sykmeldtId]/soknader');
     });
 

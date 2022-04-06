@@ -56,7 +56,7 @@ function SideNavigationList({
                     notify={sykmeldt.previewSoknader.some((it) => isPreviewSoknadNotification(it))}
                     href={`/sykmeldt/${sykmeldt.narmestelederId}/soknader`}
                 >
-                    Søknader om sykmeldinger
+                    Søknader om sykepenger
                 </SideNavigationMenuItem>
                 {activePage === 'soknad' && <ActiveSubItem Icon={CoApplicant}>Soknad</ActiveSubItem>}
                 <SideNavigationMenuItem
