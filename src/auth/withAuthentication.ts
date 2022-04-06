@@ -112,8 +112,11 @@ export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
             return;
         }
 
-        const userVersion = req.headers['x-client-version'] as string;
-        metrics.versionCounter.inc({ version: userVersion }, 1);
+        const userVersion = req.headers['x-client-version'] as string | undefined;
+        // When proxying redirects for dialogmøter there is no user version header :)
+        if (userVersion) {
+            metrics.versionCounter.inc({ version: userVersion }, 1);
+        }
 
         return handler(req, res, ...rest);
     };
