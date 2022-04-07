@@ -17,7 +17,6 @@ export const cacheConfig: Pick<InMemoryCacheConfig, 'possibleTypes' | 'typePolic
     possibleTypes: possibleTypesGenerated.possibleTypes,
     typePolicies: {
         PreviewSykmeldt: { keyFields: ['narmestelederId'] },
-        Periode: { keyFields: ['fom', 'tom'] },
     },
 };
 
