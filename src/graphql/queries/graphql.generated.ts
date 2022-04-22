@@ -149,6 +149,7 @@ export type PreviewNySoknad = BasePreviewSoknad & {
     fom: Scalars['Date'];
     id: Scalars['String'];
     ikkeSendtSoknadVarsel: Scalars['Boolean'];
+    lest: Scalars['Boolean'];
     perioder: Array<Soknadsperiode>;
     status: SoknadsstatusEnum;
     sykmeldingId: Scalars['String'];
@@ -956,6 +957,7 @@ export type PreviewSoknad_PreviewNySoknad_Fragment = {
     sykmeldingId: string;
     fom: string;
     tom: string;
+    lest: boolean;
     ikkeSendtSoknadVarsel: boolean;
     perioder: Array<{
         __typename: 'Soknadsperiode';
@@ -1056,6 +1058,7 @@ export type PreviewSykmeldtFragment = {
               sykmeldingId: string;
               fom: string;
               tom: string;
+              lest: boolean;
               ikkeSendtSoknadVarsel: boolean;
               perioder: Array<{
                   __typename: 'Soknadsperiode';
@@ -1153,6 +1156,7 @@ export type MineSykmeldteQuery = {
                   sykmeldingId: string;
                   fom: string;
                   tom: string;
+                  lest: boolean;
                   ikkeSendtSoknadVarsel: boolean;
                   perioder: Array<{
                       __typename: 'Soknadsperiode';
@@ -1602,7 +1606,10 @@ export const PreviewSoknadFragmentDoc = {
                         typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PreviewNySoknad' } },
                         selectionSet: {
                             kind: 'SelectionSet',
-                            selections: [{ kind: 'Field', name: { kind: 'Name', value: 'ikkeSendtSoknadVarsel' } }],
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'lest' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'ikkeSendtSoknadVarsel' } },
+                            ],
                         },
                     },
                     {
