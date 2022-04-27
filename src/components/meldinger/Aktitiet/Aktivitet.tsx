@@ -57,12 +57,6 @@ const Aktivitet = ({ sykmeldtId, aktivitetsvarselId }: Props): JSX.Element => {
                 arbeidsgiver har du plikt til å tilrettelegge arbeidet så langt det er mulig, og bidra til løsninger som
                 hindrer unødig sykefravær.
             </BodyLong>
-            <Label>Arbeidsgiverens tilretteleggingsplikt</Label>
-            <BodyLong spacing>
-                Aktivitetsplikten henger nært sammen med arbeidsgiverens muligheter for å tilrettelegge arbeidet. Som
-                arbeidsgiver har du plikt til å tilrettelegge arbeidet så langt det er mulig, og bidra til løsninger som
-                hindrer unødig sykefravær.
-            </BodyLong>
 
             <Label>Hva må du gjøre nå?</Label>
             <BodyLong spacing>
