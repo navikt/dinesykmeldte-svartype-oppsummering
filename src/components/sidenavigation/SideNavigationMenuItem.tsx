@@ -1,10 +1,11 @@
 import { Back, Bandage } from '@navikt/ds-icons';
 import cn from 'classnames';
-import { BodyShort, Button } from '@navikt/ds-react';
+import { Button, Label } from '@navikt/ds-react';
 import React from 'react';
 import Link from 'next/link';
 
 import { cleanId } from '../../utils/stringUtils';
+import NotifcationDot from '../shared/NotifcationDot/NotifcationDot';
 
 import { Pages, useActivePage } from './useActivePage';
 import styles from './SideNavigationMenuItem.module.css';
@@ -18,6 +19,7 @@ interface BaseProps {
 
 interface SimpleSideNavigationMenuItemProps extends BaseProps {
     Icon: typeof Bandage;
+    notifications?: number;
 }
 
 export function SimpleSideNavigationMenuItem({
@@ -26,13 +28,22 @@ export function SimpleSideNavigationMenuItem({
     Icon,
     children,
     external,
+    notifications,
 }: SimpleSideNavigationMenuItemProps): JSX.Element {
     const id = cleanId(children);
 
+    let icon: 'normal' | 'notifications';
+    if (notifications && notifications > 0) {
+        icon = 'notifications';
+    } else {
+        icon = 'normal';
+    }
+
     const content = (
         <>
-            <Icon className={styles.icon} />
-            {children}
+            {icon === 'normal' && <Icon className={styles.icon} />}
+            {icon === 'notifications' && notifications && <NotifcationDot notifications={notifications} />}
+            <Label size="small">{children}</Label>
         </>
     );
 
@@ -40,7 +51,9 @@ export function SimpleSideNavigationMenuItem({
         id,
         as: 'a' as const,
         variant: 'tertiary' as const,
-        className: cn(styles.menuItem, className),
+        className: cn(styles.menuItem, className, {
+            [styles.notifyingMenuItem]: notifications,
+        }),
     };
 
     if (external === 'relative') {
@@ -68,9 +81,8 @@ interface SideNavigationMenuItemProps extends BaseProps {
     childPage?: Pages;
     icons: {
         Normal: typeof Bandage;
-        Notify: typeof Bandage;
     };
-    notify: boolean;
+    notifications: number;
 }
 
 export function SideNavigationMenuItem({
@@ -80,21 +92,21 @@ export function SideNavigationMenuItem({
     external,
     page,
     childPage,
-    notify,
-    icons: { Normal, Notify },
+    notifications,
+    icons: { Normal },
 }: SideNavigationMenuItemProps): JSX.Element {
     const id = cleanId(children);
     const activePage = useActivePage();
 
     const isThisPage = activePage === page;
     const isChildPage = activePage === childPage;
-    let icon: 'normal' | 'notify' | 'back';
+    let icon: 'normal' | 'notifications' | 'back';
     if (isChildPage) {
         icon = 'back';
     } else if (isThisPage) {
         icon = 'normal';
-    } else if (notify) {
-        icon = 'notify';
+    } else if (notifications > 0) {
+        icon = 'notifications';
     } else {
         icon = 'normal';
     }
@@ -102,10 +114,9 @@ export function SideNavigationMenuItem({
     const content = (
         <>
             {icon === 'normal' && <Normal className={styles.icon} />}
-            {icon === 'notify' && <Notify className={cn(styles.icon, styles.notifyingIcon)} />}
+            {icon === 'notifications' && <NotifcationDot notifications={notifications} />}
             {icon === 'back' && <Back className={styles.icon} />}
-            {children}
-            {!isThisPage && notify && <div className={styles.fakeBorderHack} />}
+            <Label size="small">{children}</Label>
         </>
     );
 
@@ -115,7 +126,7 @@ export function SideNavigationMenuItem({
         variant: 'tertiary' as const,
         className: cn(styles.menuItem, className, {
             [styles.activeMenuItem]: isThisPage,
-            [styles.notifyingMenuItem]: !isThisPage && notify,
+            [styles.notifyingMenuItem]: !isThisPage && notifications,
         }),
     };
 
@@ -154,9 +165,9 @@ export function ActiveSubItem({
         <li aria-labelledby={id}>
             <div className={cn(styles.activeSubItem, className)}>
                 <Icon />
-                <BodyShort id={id} size="small">
+                <Label id={id} size="small">
                     {children}
-                </BodyShort>
+                </Label>
             </div>
         </li>
     );
