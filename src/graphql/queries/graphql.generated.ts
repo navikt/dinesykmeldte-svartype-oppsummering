@@ -224,6 +224,7 @@ export type Soknad = {
     lest: Scalars['Boolean'];
     navn: Scalars['String'];
     perioder: Array<Soknadsperiode>;
+    sendtTilNavDato?: Maybe<Scalars['DateTime']>;
     sporsmal: Array<SoknadSporsmal>;
     sykmeldingId: Scalars['String'];
     tom: Scalars['Date'];

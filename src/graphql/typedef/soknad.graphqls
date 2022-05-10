@@ -49,6 +49,7 @@ type Soknad {
     fom: Date!
     tom: Date!
     lest: Boolean!
+    sendtTilNavDato: DateTime
     korrigererSoknadId: String
     perioder: [Soknadsperiode!]!
     sporsmal: [SoknadSporsmal!]!

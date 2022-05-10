@@ -696,6 +696,7 @@ function toCompleteSoknad(navn: string, sykmeldt: SykmeldtDeduplicated, soknad: 
         tom: '2021-11-10',
         perioder: soknad.perioder,
         korrigererSoknadId: soknad.korrigererSoknadId,
+        sendtTilNavDato: '2021-11-22',
         sporsmal: [
             {
                 id: '42',
