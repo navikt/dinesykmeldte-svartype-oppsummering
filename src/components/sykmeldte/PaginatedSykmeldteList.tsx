@@ -30,7 +30,7 @@ function PaginatedSykmeldteList({ sykmeldte, focusSykmeldtId }: Props): JSX.Elem
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!focusSykmeldtId) return;
+        if (!focusSykmeldtId || focusSykmeldtIndex === -1) return;
 
         const focusPage = Math.floor(focusSykmeldtIndex / pageSize);
 

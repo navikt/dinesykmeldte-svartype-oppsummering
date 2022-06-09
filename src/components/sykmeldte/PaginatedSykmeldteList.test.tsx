@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+import { waitFor } from '@testing-library/react';
 
 import { render, screen, within } from '../../utils/test/testUtils';
 import { createPreviewSykmeldt } from '../../utils/test/dataCreators';
@@ -8,8 +9,8 @@ import { range } from '../../utils/tsUtils';
 import PaginatedSykmeldteList from './PaginatedSykmeldteList';
 
 describe('PaginatedSykmeldteList', () => {
-    function setup(sykmeldte: PreviewSykmeldtFragment[]): void {
-        render(<PaginatedSykmeldteList sykmeldte={sykmeldte} focusSykmeldtId={null} />);
+    function setup(sykmeldte: PreviewSykmeldtFragment[], focusSykmeldtId: string | null = null): void {
+        render(<PaginatedSykmeldteList sykmeldte={sykmeldte} focusSykmeldtId={focusSykmeldtId} />);
     }
 
     it('should not paginate when exactly 5 sykmeldte', () => {
@@ -41,6 +42,29 @@ describe('PaginatedSykmeldteList', () => {
         expect(within(region).getByRole('button', { name: '1' })).toBeInTheDocument();
         expect(within(region).getByRole('button', { name: '2' })).toBeInTheDocument();
         expect(within(region).getByRole('button', { name: 'Neste' })).toBeInTheDocument();
+    });
+
+    describe('given someone to focus', () => {
+        it('should expand and focus correct page', async () => {
+            setup(
+                [
+                    createPreviewSykmeldt({ narmestelederId: '1' }),
+                    createPreviewSykmeldt({ narmestelederId: '2' }),
+                    createPreviewSykmeldt({ narmestelederId: '3' }),
+                    createPreviewSykmeldt({ narmestelederId: '4' }),
+                    createPreviewSykmeldt({ narmestelederId: '5' }),
+                    createPreviewSykmeldt({ narmestelederId: '6' }),
+                ],
+                '6',
+            );
+
+            const region = screen.getByRole('region', { name: 'navigering for paginering' });
+
+            expect(region).toBeInTheDocument();
+            await waitFor(() =>
+                expect(within(region).getByRole('button', { name: '2' })).toHaveAttribute('aria-selected', 'true'),
+            );
+        });
     });
 
     describe('when filtering for page', () => {
