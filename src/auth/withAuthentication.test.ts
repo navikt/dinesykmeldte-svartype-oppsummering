@@ -38,8 +38,12 @@ jest.mock('openid-client', () => ({
     },
 }));
 
+declare module 'jose' {
+    export function jwtVerify(): ReturnType<typeof jest.fn>;
+}
+
 jest.mock('jose', () => ({
-    jwtVerify: jest.fn(),
+    jwtVerify: () => jest.fn(),
     createRemoteJWKSet: jest.fn(),
 }));
 
@@ -64,8 +68,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() - 100) / 1000 },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => expiredJosePayload);
+            jose.jwtVerify().mockImplementation(() => expiredJosePayload);
 
             const handler: PageHandler = jest.fn();
             const fakeContext = createFakeContext();
@@ -83,8 +86,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() + 1000) / 1000, client_id: 'wrong-id' },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => wrongClientIdJosePayload);
+            jose.jwtVerify().mockImplementation(() => wrongClientIdJosePayload);
 
             const handler: PageHandler = jest.fn();
             const fakeContext = createFakeContext();
@@ -102,8 +104,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() + 1000) / 1000, client_id: 'id-porten-client-id', acr: 'Level3' },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => wrongClientIdJosePayload);
+            jose.jwtVerify().mockImplementation(() => wrongClientIdJosePayload);
 
             const handler: PageHandler = jest.fn();
             const fakeContext = createFakeContext();
@@ -121,8 +122,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() + 1000) / 1000, client_id: 'id-porten-client-id', acr: 'Level4' },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => wrongClientIdJosePayload);
+            jose.jwtVerify().mockImplementation(() => wrongClientIdJosePayload);
 
             const handler: PageHandler = jest.fn();
             const fakeContext = createFakeContext();
@@ -149,8 +149,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() - 100) / 1000 },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => expiredJosePayload);
+            jose.jwtVerify().mockImplementation(() => expiredJosePayload);
 
             const handler = jest.fn();
             const fakeRequest = createFakeReq();
@@ -167,8 +166,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() + 1000) / 1000, client_id: 'wrong-id' },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => wrongClientIdJosePayload);
+            jose.jwtVerify().mockImplementation(() => wrongClientIdJosePayload);
 
             const handler = jest.fn();
             const fakeRequest = createFakeReq();
@@ -185,8 +183,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() + 1000) / 1000, client_id: 'id-porten-client-id', acr: 'Level3' },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => wrongClientIdJosePayload);
+            jose.jwtVerify().mockImplementation(() => wrongClientIdJosePayload);
 
             const handler = jest.fn();
             const fakeRequest = createFakeReq();
@@ -203,8 +200,7 @@ describe('withAuthentication', () => {
                 payload: { exp: (Date.now() + 1000) / 1000, client_id: 'id-porten-client-id', acr: 'Level4' },
             };
 
-            // @ts-expect-error Mock does not exist on library types
-            jose.jwtVerify.mockImplementation(() => wrongClientIdJosePayload);
+            jose.jwtVerify().mockImplementation(() => wrongClientIdJosePayload);
 
             const handler = jest.fn();
             const fakeRequest = createFakeReq();

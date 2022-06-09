@@ -15,13 +15,12 @@ import { MessageResponseSchema } from './schema/common';
 const getMarkReadPath = (type: ReadType, id: string): string => {
     switch (type) {
         case ReadType.Hendelse:
+        case ReadType.Aktivitetsvarsel:
             return `hendelse/${id}/lest`;
         case ReadType.Soknad:
             return `soknad/${id}/lest`;
         case ReadType.Sykmelding:
             return `sykmelding/${id}/lest`;
-        case ReadType.Aktivitetsvarsel:
-            return `aktivitetsvarsel/${id}/lest`;
     }
 };
 
