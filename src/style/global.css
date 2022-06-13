@@ -24,7 +24,8 @@ html {
     }
 
     #decorator-header,
-    #decorator-footer {
+    #decorator-footer,
+    ._hj_feedback_container {
         display: none;
     }
 
