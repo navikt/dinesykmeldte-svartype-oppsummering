@@ -58,7 +58,7 @@ function SideNavigationList({
                 <SimpleSideNavigationMenuItem
                     href={`/oppfolgingsplaner/${sykmeldt.narmestelederId}`}
                     Icon={Notes}
-                    external="relative"
+                    external="proxy"
                     notifications={sykmeldt.oppfolgingsplaner.length}
                 >
                     Oppfølgingsplaner
