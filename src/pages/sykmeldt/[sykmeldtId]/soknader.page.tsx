@@ -37,7 +37,7 @@ function Soknader(): JSX.Element {
             }}
         >
             <Head>
-                <title>Søknader for {sykmeldtName} - nav.no</title>
+                <title>Søknader for | Dine Sykmeldte - nav.no</title>
             </Head>
             <SideNavigation sykmeldt={sykmeldt}>
                 <ContentContainer>

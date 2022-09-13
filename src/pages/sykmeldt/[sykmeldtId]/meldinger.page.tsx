@@ -36,7 +36,7 @@ const MeldingerPage = (): JSX.Element => {
             }}
         >
             <Head>
-                <title>Meldinger for {sykmeldtName} - nav.no</title>
+                <title>Meldinger | Dine Sykmeldte - nav.no</title>
             </Head>
             <SideNavigation sykmeldt={sykmeldt}>
                 <ContentContainer>

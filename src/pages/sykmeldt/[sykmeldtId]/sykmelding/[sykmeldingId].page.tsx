@@ -52,7 +52,7 @@ function Sykmelding(): JSX.Element {
             }}
         >
             <Head>
-                <title>Sykmelding for {sykmeldtName} - nav.no</title>
+                <title>Sykmelding | Dine Sykmeldte - nav.no</title>
             </Head>
             <SideNavigation sykmeldt={sykmeldtQuery.sykmeldt}>
                 <ContentContainer>

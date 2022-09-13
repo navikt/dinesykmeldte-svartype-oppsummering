@@ -36,7 +36,7 @@ function Sykmeldinger(): JSX.Element {
             }}
         >
             <Head>
-                <title>Sykmeldinger for {sykmeldtName} - nav.no</title>
+                <title>Sykmeldinger | Dine Sykmeldte - nav.no</title>
             </Head>
             <SideNavigation sykmeldt={sykmeldt}>
                 <ContentContainer>

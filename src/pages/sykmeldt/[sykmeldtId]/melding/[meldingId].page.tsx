@@ -34,7 +34,7 @@ const MeldingPage = (): JSX.Element => {
             }}
         >
             <Head>
-                <title>Melding for {sykmeldtName} - nav.no</title>
+                <title>Melding | Dine Sykmeldte - nav.no</title>
             </Head>
             <SideNavigation sykmeldt={sykmeldt}>
                 <ContentContainer>
