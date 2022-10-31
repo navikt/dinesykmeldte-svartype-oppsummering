@@ -18,6 +18,7 @@ import { PAGE_SIZE_KEY, paginationSlice } from '../state/paginationSlice'
 import UnsupportedBrowser from '../components/UserWarnings/UnsupportedBrowser/UnsupportedBrowser'
 import LoggedOut from '../components/UserWarnings/LoggedOut/LoggedOut'
 import NewVersionWarning from '../components/NewVersionWarning/NewVersionWarning'
+import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 
 export interface AppProps extends Omit<NextAppProps, 'pageProps' | 'Component'> {
     pageProps: PropsWithChildren<unknown> & Partial<PrefetchResults>
@@ -43,6 +44,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <ErrorBoundary>
             <Provider store={store}>
                 <ApolloProvider client={apolloClient}>
+                    <LabsWarning />
                     <LoggedOut />
                     <NewVersionWarning />
                     {!pageProps.isIE ? <Component {...pageProps} /> : <UnsupportedBrowser />}
