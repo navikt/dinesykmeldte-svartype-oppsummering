@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/explicit-function-return-type */
 
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require('@sentry/nextjs')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
-});
+})
 
 const witSentry = (nextConfig) =>
     process.env.ENABLE_SENTRY
@@ -11,7 +11,7 @@ const witSentry = (nextConfig) =>
               silent: true,
               enabled: process.env.NODE_ENV === 'production' && !!process.env.ENABLE_SENTRY,
           })
-        : nextConfig;
+        : nextConfig
 
 const nextConfig = {
     async rewrites() {
@@ -32,7 +32,7 @@ const nextConfig = {
                 source: '/oppfolgingsplaner/:sykmeldtId',
                 destination: '/api/hendelser-ferdigstille-proxy/oppfolgingsplan/:sykmeldtId',
             },
-        ];
+        ]
     },
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     assetPrefix: process.env.ASSET_PREFIX,
@@ -48,6 +48,6 @@ const nextConfig = {
         ignoreDuringBuilds: true,
         dirs: ['src'],
     },
-};
+}
 
-module.exports = withBundleAnalyzer(witSentry(nextConfig));
+module.exports = withBundleAnalyzer(witSentry(nextConfig))
