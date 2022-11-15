@@ -33,14 +33,14 @@ const PageError = ({ graphic = 'dad', text, details, action, noReload = false }:
                 <Heading spacing size="small" level="2">
                     {text ?? 'Det har oppstått en uforventet feil'}
                 </Heading>
-                <BodyLong spacing>
+                <BodyLong spacing={!details}>
                     {!noReload && (
                         <>
                             Du kan prøve å <Link href={publicEnv.publicPath}>laste siden på nytt</Link>.
                         </>
-                    )}{' '}
-                    {details ?? 'Vi jobber allerede med å fikse feilen.'}
+                    )}
                 </BodyLong>
+                {details ?? <BodyLong spacing>Vi jobber allerede med å fikse feilen.</BodyLong>}
                 <BodyLong spacing>
                     {action ?? 'Dersom problemet vedvarer kan du kontakte oss på arbeidsgivertelefonen: 55 55 33 36.'}
                 </BodyLong>

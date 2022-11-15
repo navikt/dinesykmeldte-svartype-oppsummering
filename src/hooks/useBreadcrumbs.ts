@@ -25,6 +25,10 @@ const baseCrumb: CompleteCrumb = {
  * The last crumb does not need to provide a URL, since it's only used to display the text for the "active" crumb.
  */
 function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): CompleteCrumb[] {
+    console.log('Temporary client only logging')
+    console.log('Temporary client only logging, path:', publicEnv.publicPath)
+    console.log('Temporary client only logging, env:', publicEnv.runtimeEnv)
+
     const prefixedCrumbs: CompleteCrumb[] = breadcrumbs.map(
         (it): CompleteCrumb => ({
             ...it,
