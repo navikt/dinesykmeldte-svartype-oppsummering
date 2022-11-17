@@ -21,12 +21,14 @@ interface Props {
 
 function SykmeldtInfo({ sykmeldt }: Props): JSX.Element {
     const [open, setOpen] = useState(false)
-    const onClose = useCallback(() => {
+    const onClose = useCallback((wasCancelled: boolean) => {
         setOpen(false)
-        logAmplitudeEvent({
-            eventName: 'modal lukket',
-            data: { tekst: 'fjern fra min oversikt: avbryt' },
-        })
+        if (wasCancelled) {
+            logAmplitudeEvent({
+                eventName: 'modal lukket',
+                data: { tekst: 'fjern fra min oversikt: avbryt' },
+            })
+        }
     }, [])
 
     return (
@@ -62,14 +64,20 @@ function SykmeldtInfo({ sykmeldt }: Props): JSX.Element {
     )
 }
 
-function UnlinkModal({ onClose, sykmeldt }: { onClose: () => void; sykmeldt: PreviewSykmeldtFragment }): JSX.Element {
+function UnlinkModal({
+    onClose,
+    sykmeldt,
+}: {
+    onClose: (wasCancelled: boolean) => void
+    sykmeldt: PreviewSykmeldtFragment
+}): JSX.Element {
     const headingId = `soknad-modal-label-${sykmeldt.narmestelederId}`
     const [unlinkSykmeldt, { loading }] = useMutation(UnlinkSykmeldtDocument)
     const { refetch, loading: refetching } = useQuery(MineSykmeldteDocument)
 
     const onSuccess = useCallback(async () => {
         await refetch()
-        onClose()
+        onClose(false)
     }, [onClose, refetch])
 
     const handleOnUnlinkClick = useCallback(() => {
@@ -81,7 +89,7 @@ function UnlinkModal({ onClose, sykmeldt }: { onClose: () => void; sykmeldt: Pre
     }, [sykmeldt.narmestelederId, unlinkSykmeldt, onSuccess])
 
     return (
-        <Modal open onClose={onClose} aria-labelledby={headingId}>
+        <Modal open onClose={() => onClose(true)} aria-labelledby={headingId}>
             <Modal.Content className={styles.meldeModalRoot}>
                 <Heading id={headingId} size="medium" level="2" spacing>
                     Meld fra om endring
@@ -95,7 +103,7 @@ function UnlinkModal({ onClose, sykmeldt }: { onClose: () => void; sykmeldt: Pre
                     <Button variant="danger" onClick={handleOnUnlinkClick} loading={loading || refetching}>
                         Ja, fjern fra min oversikt
                     </Button>
-                    <Button variant="secondary" onClick={onClose}>
+                    <Button variant="secondary" onClick={() => onClose(true)}>
                         Avbryt
                     </Button>
                 </div>
