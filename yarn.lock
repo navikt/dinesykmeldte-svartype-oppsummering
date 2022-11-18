@@ -2662,27 +2662,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/next-auth-wonderwall@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "@navikt/next-auth-wonderwall@npm:0.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-auth-wonderwall%2F0.8.0%2Fec643895721b3a18927b22785f0f69492bb891a4"
+"@navikt/next-auth-wonderwall@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@navikt/next-auth-wonderwall@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-auth-wonderwall%2F1.0.0%2F306921e94adbfb6d16b1102620cb282589b1d341"
   dependencies:
-    jose: ^4.9.3
+    jose: ^4.11.0
     node-cache: ^5.1.2
-    openid-client: ^5.1.9
+    openid-client: ^5.3.0
     zod: ^3.19.1
   peerDependencies:
-    next: 12
-  checksum: 3c0e4892c81eb5190c4b07f5c8fa9b85ab68e2a6f8b7468d4aede47b021abe8bfcde16325750cc62490c6f6a1844b953117a4d56fc3a5be14442a2f91b490800
+    next: 12 || 13
+  checksum: 0351909ad33f12887de6ed317012c408431edf97fabf2aacbf551913f1b8305f9d5de5baaa6e72dcdd3c84f75681e0d86882d19b480e73fb50159e0248b2bc9d
   languageName: node
   linkType: hard
 
-"@navikt/next-logger@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@navikt/next-logger@npm:1.11.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.11.0%2F097a1d1456dd6d307650b1a5d7eecb341114e151"
+"@navikt/next-logger@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "@navikt/next-logger@npm:1.12.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.12.0%2Fc7cb132501b2d568071ad2d72192a61b3f270aa1"
   peerDependencies:
     next: 12
     pino: 8
-  checksum: 15f3d67a338383d1a183a31153f4e0704bbba3942b6f1d2a023d7a8699b11a3134a2ab95608c3bca1ca75d27818c30f93c585f245c4abd5897be6e54520357a6
+  checksum: ace9aa2d04a2522c5e205c8ec07d1641efde82fedb5586b2e345f77f7d999d805b216868055b39a592c3f5e248a8b4bff2a84fefea9212b08c4cbb7d81cfa1e3
   languageName: node
   linkType: hard
 
@@ -6117,8 +6117,8 @@ __metadata:
     "@navikt/eslint-config-teamsykmelding": ^1.2.0
     "@navikt/fnrvalidator": ^1.3.3
     "@navikt/nav-dekoratoren-moduler": ^1.7.0
-    "@navikt/next-auth-wonderwall": ^0.8.0
-    "@navikt/next-logger": ^1.11.0
+    "@navikt/next-auth-wonderwall": ^1.0.0
+    "@navikt/next-logger": ^1.12.0
     "@next/bundle-analyzer": ^13.0.0
     "@reduxjs/toolkit": ^1.8.6
     "@sentry/nextjs": ^7.17.3
@@ -9116,17 +9116,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.1.4":
-  version: 4.3.7
-  resolution: "jose@npm:4.3.7"
-  checksum: 3f62324bd1920d8c487641ab56fa568a48b4bdb149bf95e070cbbbc97b68b617d8562e64dbd02cc900f8f02f332a964819b42ccf03d23417ac30f4beaf0e3d9e
-  languageName: node
-  linkType: hard
-
-"jose@npm:^4.9.3":
-  version: 4.9.3
-  resolution: "jose@npm:4.9.3"
-  checksum: 95865830768dcf82774d19e92dc854c5bc9dc5d9c9626a65a2974272e3aca5d2f56678611943f85802431d2d6d6f8bff9548b7cdb7578e6fe61529bd9c82e1d3
+"jose@npm:^4.10.0, jose@npm:^4.11.0":
+  version: 4.11.0
+  resolution: "jose@npm:4.11.0"
+  checksum: 8d81e978e0da306911b61b1de1e2d78bd4903b4aa68a4b338b7c89c41edc3d56aea4d5ef4784a078a630dd6aa81f6328901ae3ce215f33b90d51ee8ebf4c9dbd
   languageName: node
   linkType: hard
 
@@ -11070,15 +11063,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openid-client@npm:^5.1.9":
-  version: 5.1.9
-  resolution: "openid-client@npm:5.1.9"
+"openid-client@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "openid-client@npm:5.3.0"
   dependencies:
-    jose: ^4.1.4
+    jose: ^4.10.0
     lru-cache: ^6.0.0
     object-hash: ^2.0.1
     oidc-token-hash: ^5.0.1
-  checksum: 55390a7eceaafdc340a5f2ece576eb4863fcb4cd8840e4a7a1af66bbaf830623b18cf1dd0b8ce472c6f36c6313e78f92db48ca0c10eb8c681a81e5a3d607fc9f
+  checksum: 27faa298e083daae2a2a99629b25cc89f648302f4845dd1acd04ec6e7105a6edf13a5c38ab1159bcb7b88c5bc54be08e021c911e22f0b8bfcca1b2d686ae3d95
   languageName: node
   linkType: hard
 
