@@ -1,9 +1,9 @@
 :not(.accordionRootNotification).accordionRoot:hover {
-    background-color: var(--a-surface-action-subtle-hover);
+    background-color: var(--a-surface-selected);
 }
 
 :not(.accordionRootNotification).accordionRootExpanded {
-    background-color: var(--a-surface-action-subtle-hover);
+    background-color: var(--a-surface-selected);
 }
 
 .accordionHeader {
@@ -12,14 +12,13 @@
 
 .accordionRootNotification {
     border-color: var(--a-border-warning);
-    background-color: var(--a-orange-50);
+    background-color: var(--a-surface-warning-subtle);
 }
 
-.accordionRootNotification.accordionRootExpanded > :global(.navds-accordion__header) {
-    background-color: var(--a-orange-50);
+.accordionRootNotification.accordionRootExpanded {
+    background-color: var(--a-surface-selected);
 }
-
-.accordionRootFocused {
+´ .accordionRootFocused {
     box-shadow: var(--a-shadow-focus-inverted);
 }
 
@@ -34,7 +33,7 @@
 
 .accordionRootNySoknadReadWarning.accordionRootExpanded,
 .accordionRootNySoknadReadWarning.accordionRootExpanded > :global(.navds-accordion__header) {
-    background-color: var(--a-surface-action-subtle-hover);
+    background-color: var(--a-surface-selected);
 }
 
 .accordionContent .info {

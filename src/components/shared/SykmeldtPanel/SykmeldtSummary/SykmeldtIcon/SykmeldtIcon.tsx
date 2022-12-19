@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bandage, DialogReportFilled, Sandglass, SuccessStroke, Task } from '@navikt/ds-icons'
+import { Bandage, DialogReportFilled, Sandglass, DecisionCheck, Task } from '@navikt/ds-icons'
 import cn from 'classnames'
 
 import { PreviewSykmeldtFragment } from '../../../../../graphql/queries/graphql.generated'
@@ -62,7 +62,7 @@ function SykmeldtCardIcon({ variant }: { variant: IconVariant }): JSX.Element {
         case 'sykmeldt':
             return <Bandage fontSize="2rem" role="img" aria-hidden />
         case 'friskmeldt':
-            return <SuccessStroke fontSize="2rem" role="img" aria-hidden />
+            return <DecisionCheck fontSize="2.2rem" role="img" aria-hidden />
         case 'future':
             return <Sandglass fontSize="2rem" role="img" aria-hidden />
         case 'notSentSoknad':

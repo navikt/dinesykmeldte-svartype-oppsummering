@@ -17,7 +17,7 @@ export function ManglerSoknadInfo({ soknader, name, sykmeldtId }: Props): JSX.El
                 <DsLink>
                     {`Vi mangler ${soknader.length === 1 ? '1 søknad' : soknader.length + ' søknader'} fra ${
                         name.split(' ')[0]
-                    }.`}
+                    }`}
                 </DsLink>
             </Link>
         </Alert>

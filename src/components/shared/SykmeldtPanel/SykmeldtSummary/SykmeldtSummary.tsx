@@ -20,10 +20,10 @@ function SykmeldtSummary({ sykmeldt, notification, notSentSoknad, notifyingText 
         <div className={cn(styles.accordionListItem)}>
             <SykmeldtIcon sykmeldt={sykmeldt} notification={notification} notSentSoknad={notSentSoknad} />
             <div>
-                <Heading size="medium" level="3">
+                <Heading size="small" level="3">
                     {sykmeldt.navn}
                 </Heading>
-                <BodyShort>
+                <BodyShort size="small">
                     {(notification || notSentSoknad) && notifyingText ? (
                         <>{notifyingText}</>
                     ) : (
