@@ -9,6 +9,7 @@ import CheckboxExplanation from '../shared/checkboxexplanation/CheckboxExplanati
 import { ListItem } from '../shared/listItem/ListItem'
 import { createPeriodeKey, formatPeriodTextNowOrFuture } from '../../utils/sykmeldingPeriodUtils'
 import { addSpaceAfterEverySixthCharacter } from '../../utils/stringUtils'
+import { logAmplitudeEvent } from '../../amplitude/amplitude'
 
 import MulighetForArbeid from './sykmeldingperiode/MulighetForArbeid'
 import SykmeldingPeriode from './sykmeldingperiode/SykmeldingPeriode'
@@ -22,16 +23,16 @@ function SykmeldingPanel({ sykmelding }: Props): JSX.Element {
     return (
         <div className={styles.panelRoot}>
             <section className={styles.header} aria-labelledby="sykmeldinger-panel-info-section">
-                <Heading size="small" level="2" id="sykmeldinger-panel-info-section">
+                <Heading size="medium" level="2" id="sykmeldinger-panel-info-section">
                     Opplysninger fra sykmeldingen
                 </Heading>
-                <div className={styles.periods}>
+                <ul className={styles.periods}>
                     {sykmelding.perioder.map((it) => (
-                        <BodyShort key={it.fom} className={styles.period} size="small">
+                        <li key={it.fom} className={styles.period}>
                             {formatPeriodTextNowOrFuture(it)}
-                        </BodyShort>
+                        </li>
                     ))}
-                </div>
+                </ul>
                 <div
                     className={cn(styles.sentDateAndPrint, {
                         [styles.onlyPrint]: !sykmelding.sendtTilArbeidsgiverDato,
@@ -43,7 +44,17 @@ function SykmeldingPanel({ sykmelding }: Props): JSX.Element {
                         </BodyShort>
                     )}
                     <Button
-                        onClick={() => window.print()}
+                        onClick={() => {
+                            logAmplitudeEvent({
+                                eventName: 'last ned',
+                                data: {
+                                    type: 'sykmelding',
+                                    tema: 'Sykmelding',
+                                    tittel: 'Lag PDF versjon av sykmeldingen',
+                                },
+                            })
+                            window.print()
+                        }}
                         variant="tertiary"
                         className={styles.printButton}
                         icon={<Print title="Lag PDF versjon av sykmeldingen" />}
