@@ -117,6 +117,7 @@ export function createSoknad(overrides?: Partial<SoknadFragment>): SoknadFragmen
         lest: false,
         sendtTilNavDato: null,
         sendtDato: '2021-03-01',
+        korrigererSoknadId: null,
         perioder: [
             {
                 __typename: 'Soknadsperiode',
