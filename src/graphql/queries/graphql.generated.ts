@@ -81,7 +81,7 @@ export type Behandlingsdager = FomTom & {
 export type Dialogmote = {
     __typename: 'Dialogmote'
     hendelseId: Scalars['String']
-    mottatt: Scalars['DateTime']
+    mottatt?: Maybe<Scalars['DateTime']>
     tekst?: Maybe<Scalars['String']>
 }
 
@@ -123,7 +123,7 @@ export type MutationUnlinkSykmeldtArgs = {
 export type Oppfolgingsplan = {
     __typename: 'Oppfolgingsplan'
     hendelseId: Scalars['String']
-    mottatt: Scalars['DateTime']
+    mottatt?: Maybe<Scalars['DateTime']>
     tekst?: Maybe<Scalars['String']>
 }
 
@@ -1031,14 +1031,14 @@ export type PreviewSoknadFragment =
 export type DialogmoteFragment = {
     __typename: 'Dialogmote'
     hendelseId: string
-    mottatt: string
+    mottatt?: string | null
     tekst?: string | null
 }
 
 export type OppfolgingsplanFragment = {
     __typename: 'Oppfolgingsplan'
     hendelseId: string
-    mottatt: string
+    mottatt?: string | null
     tekst?: string | null
 }
 
@@ -1138,7 +1138,7 @@ export type PreviewSykmeldtFragment = {
               }>
           }
     >
-    dialogmoter: Array<{ __typename: 'Dialogmote'; hendelseId: string; mottatt: string; tekst?: string | null }>
+    dialogmoter: Array<{ __typename: 'Dialogmote'; hendelseId: string; mottatt?: string | null; tekst?: string | null }>
     aktivitetsvarsler: Array<{
         __typename: 'Aktivitetsvarsel'
         hendelseId: string
@@ -1148,7 +1148,7 @@ export type PreviewSykmeldtFragment = {
     oppfolgingsplaner: Array<{
         __typename: 'Oppfolgingsplan'
         hendelseId: string
-        mottatt: string
+        mottatt?: string | null
         tekst?: string | null
     }>
 }
@@ -1246,7 +1246,12 @@ export type MineSykmeldteQuery = {
                   }>
               }
         >
-        dialogmoter: Array<{ __typename: 'Dialogmote'; hendelseId: string; mottatt: string; tekst?: string | null }>
+        dialogmoter: Array<{
+            __typename: 'Dialogmote'
+            hendelseId: string
+            mottatt?: string | null
+            tekst?: string | null
+        }>
         aktivitetsvarsler: Array<{
             __typename: 'Aktivitetsvarsel'
             hendelseId: string
@@ -1256,7 +1261,7 @@ export type MineSykmeldteQuery = {
         oppfolgingsplaner: Array<{
             __typename: 'Oppfolgingsplan'
             hendelseId: string
-            mottatt: string
+            mottatt?: string | null
             tekst?: string | null
         }>
     }> | null
