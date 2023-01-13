@@ -52,7 +52,9 @@ function findAllNotifyingDates(sykmeldte: PreviewSykmeldtFragment[]): NotifyingD
             .filter(isPreviewSoknadNotifying)
             .map((soknad: PreviewSoknadFragment): DateAndText | null => {
                 if (soknad.__typename === 'PreviewFremtidigSoknad') {
-                    logger.error('PreviewFremtidigSoknad er aldri notifying, hvorfor er den her?')
+                    logger.error(
+                        'PreviewFremtidigSoknad skal aldri kunne være notifying. Dette skal i teorien ikke kunne skje.',
+                    )
                     return null
                 }
 
