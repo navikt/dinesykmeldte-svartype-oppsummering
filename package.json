@@ -4,7 +4,7 @@
     "private": true,
     "packageManager": "yarn@3.2.0",
     "engines": {
-        "node": "16"
+        "node": "18"
     },
     "scripts": {
         "start": "concurrently -n next,codegen \"yarn start:watch\" \"yarn gen:watch\"",
