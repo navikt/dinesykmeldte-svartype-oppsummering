@@ -27,6 +27,11 @@ spec:
     path: /arbeidsgiver/sykmeldte/api/internal/is_alive
   readiness:
     path: /arbeidsgiver/sykmeldte/api/internal/is_ready
+  accessPolicy:
+    outbound:
+      external:
+        - host: nav.no
+        - host: dekoratoren.nav.no
   env:
     - name: RUNTIME_ENVIRONMENT
       value: demo
