@@ -41,20 +41,21 @@ export const browserEnv = publicEnvSchema.parse({
     runtimeEnv: process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT,
     amplitudeEnabled: process.env.NEXT_PUBLIC_AMPLITUDE_ENABLED,
     displayEgenmeldingsdager: process.env.NEXT_PUBLIC_DISPLAY_EGENMELDINGSDAGER,
-})
+} satisfies Record<keyof PublicEnv, string | undefined>)
 
-const getRawServerConfig = (): Partial<unknown> => ({
-    // Provided by nais-*.yml
-    DINE_SYKMELDTE_BACKEND_SCOPE: process.env.DINE_SYKMELDTE_BACKEND_SCOPE,
-    DINE_SYKMELDTE_BACKEND_URL: process.env.DINE_SYKMELDTE_BACKEND_URL,
-    RUNTIME_VERSION: process.env.RUNTIME_VERSION,
-    // Provided by nais
-    TOKEN_X_CLIENT_ID: process.env.TOKEN_X_CLIENT_ID,
-    TOKEN_X_PRIVATE_JWK: process.env.TOKEN_X_PRIVATE_JWK,
-    TOKEN_X_WELL_KNOWN_URL: process.env.TOKEN_X_WELL_KNOWN_URL,
-    IDPORTEN_CLIENT_ID: process.env.IDPORTEN_CLIENT_ID,
-    IDPORTEN_WELL_KNOWN_URL: process.env.IDPORTEN_WELL_KNOWN_URL,
-})
+const getRawServerConfig = (): Partial<unknown> =>
+    ({
+        // Provided by nais-*.yml
+        DINE_SYKMELDTE_BACKEND_SCOPE: process.env.DINE_SYKMELDTE_BACKEND_SCOPE,
+        DINE_SYKMELDTE_BACKEND_URL: process.env.DINE_SYKMELDTE_BACKEND_URL,
+        RUNTIME_VERSION: process.env.RUNTIME_VERSION,
+        // Provided by nais
+        TOKEN_X_CLIENT_ID: process.env.TOKEN_X_CLIENT_ID,
+        TOKEN_X_PRIVATE_JWK: process.env.TOKEN_X_PRIVATE_JWK,
+        TOKEN_X_WELL_KNOWN_URL: process.env.TOKEN_X_WELL_KNOWN_URL,
+        IDPORTEN_CLIENT_ID: process.env.IDPORTEN_CLIENT_ID,
+        IDPORTEN_WELL_KNOWN_URL: process.env.IDPORTEN_WELL_KNOWN_URL,
+    } satisfies Record<keyof ServerEnv, string | undefined>)
 
 /**
  * Server envs are lazy loaded and verified using Zod.

@@ -7,6 +7,7 @@
         "node": "18"
     },
     "scripts": {
+        "dev": "yarn start",
         "start": "concurrently -n next,codegen \"yarn start:watch\" \"yarn gen:watch\"",
         "start:watch": "NODE_OPTIONS='--inspect' next dev | pino-pretty",
         "build": "next build",
