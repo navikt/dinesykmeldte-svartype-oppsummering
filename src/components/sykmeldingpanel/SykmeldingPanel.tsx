@@ -8,7 +8,6 @@ import { formatDate } from '../../utils/dateUtils'
 import { formatPeriodTextNowOrFuture } from '../../utils/sykmeldingPeriodUtils'
 import { addSpaceAfterEverySixthCharacter } from '../../utils/stringUtils'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
-import { isEgenmeldingsdagerEnabled } from '../../utils/env'
 
 import SykmeldingPeriode from './sykmeldingperiode/SykmeldingPeriode'
 import SykmeldingenGjelder from './SykmeldingenGjelder'
@@ -68,7 +67,7 @@ function SykmeldingPanel({ sykmelding }: Props): JSX.Element {
             <ul className={styles.sykmeldingList}>
                 <SykmeldingenGjelder name={sykmelding.navn} fnr={addSpaceAfterEverySixthCharacter(sykmelding.fnr)} />
                 <SykmeldingPeriode perioder={sykmelding.perioder} />
-                {isEgenmeldingsdagerEnabled() && <Egenmeldingsdager egenmeldingsdager={sykmelding.egenmeldingsdager} />}
+                <Egenmeldingsdager egenmeldingsdager={sykmelding.egenmeldingsdager} />
                 <AnnenInfo sykmelding={sykmelding} />
                 <MulighetForArbeidList sykmelding={sykmelding} />
                 <FriskmeldingPrognose sykmelding={sykmelding} />

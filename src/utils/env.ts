@@ -1,5 +1,4 @@
 import { z, ZodError } from 'zod'
-import { isAfter } from 'date-fns'
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>
 export const publicEnvSchema = z.object({
@@ -13,7 +12,6 @@ export const publicEnvSchema = z.object({
         z.literal('prod'),
     ]),
     amplitudeEnabled: z.union([z.literal('false'), z.literal('true')]),
-    displayEgenmeldingsdager: z.union([z.literal('false'), z.literal('true')]),
 })
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>
@@ -41,7 +39,6 @@ export const browserEnv = publicEnvSchema.parse({
         : process.env.NEXT_PUBLIC_BASE_PATH ?? '',
     runtimeEnv: process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT,
     amplitudeEnabled: process.env.NEXT_PUBLIC_AMPLITUDE_ENABLED,
-    displayEgenmeldingsdager: process.env.NEXT_PUBLIC_DISPLAY_EGENMELDINGSDAGER,
 } satisfies Record<keyof PublicEnv, string | undefined>)
 
 const getRawServerConfig = (): Partial<unknown> =>
@@ -81,7 +78,3 @@ export function getServerEnv(): ServerEnv & PublicEnv {
     }
 }
 export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || browserEnv.runtimeEnv === 'demo'
-
-export function isEgenmeldingsdagerEnabled(): boolean {
-    return isAfter(new Date(), new Date('2023-05-04T12:00:00+02:00'))
-}
