@@ -46,7 +46,6 @@ function ExpandableSykmeldtPanel({
 
     const headerId = `sykmeldt-accordion-header-${sykmeldt.narmestelederId}`
     return (
-        // @ts-expect-error aria-label is required, shouldn't be. https://github.com/navikt/aksel/issues/1931
         <ExpansionCard
             ref={ref}
             open={expanded}

@@ -51,6 +51,7 @@ function SykmeldteList(): JSX.Element {
     )
 
     return (
+        // @ts-expect-error Weird TS5.0 + Next 13.4 typing error
         <ErrorBoundary>
             <div className={styles.virksomhetsPicker}>
                 <VirksomhetPicker />

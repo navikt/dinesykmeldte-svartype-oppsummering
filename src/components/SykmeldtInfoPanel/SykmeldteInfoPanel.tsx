@@ -26,6 +26,7 @@ function SykmeldteInfoPanel(): JSX.Element | null {
     }
 
     return (
+        // @ts-expect-error Weird TS5.0 + Next 13.4 typing error
         <DismissableVeileder
             storageKey="personalansvar-info"
             text={[

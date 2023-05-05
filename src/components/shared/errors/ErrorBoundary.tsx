@@ -10,8 +10,8 @@ interface State {
     hasError: boolean
 }
 
-class ErrorBoundary extends Component<PropsWithChildren<unknown>, State> {
-    constructor(props: PropsWithChildren<unknown>) {
+class ErrorBoundary extends Component<PropsWithChildren, State> {
+    constructor(props: PropsWithChildren) {
         super(props)
         this.state = { hasError: false }
     }

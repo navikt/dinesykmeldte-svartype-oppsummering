@@ -15,9 +15,12 @@ import UxSignalsWidget from '../components/UxSignals/UxSignalsWidget'
 import { MineSykmeldteDocument, VirksomheterDocument } from '../graphql/queries/graphql.generated'
 import VirksomhetPicker from '../components/virksomhetpicker/VirksomhetPicker'
 
-const DialogmoteInfoPanel = dynamic(() => import('../components/DialogmoteInfoPanel/DialogmoteInfoPanel'), {
-    ssr: false,
-})
+const DialogmoteInfoPanel: React.ComponentType = dynamic(
+    () => import('../components/DialogmoteInfoPanel/DialogmoteInfoPanel'),
+    {
+        ssr: false,
+    },
+)
 
 function Home(): JSX.Element {
     useUpdateBreadcrumbs(() => [])
@@ -28,6 +31,7 @@ function Home(): JSX.Element {
                 <title>Dine sykmeldte - nav.no</title>
             </Head>
             <SykmeldteInfoPanel />
+            {/* @ts-expect-error Weird TS5.0 + Next 13.4 typing error */}
             <DialogmoteInfoPanel />
             <SykmeldteList />
             <UxSignalsWidget />
