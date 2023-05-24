@@ -2288,9 +2288,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/eslint-config-teamsykmelding@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@navikt/eslint-config-teamsykmelding@npm:1.6.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Feslint-config-teamsykmelding%2F1.6.0%2F3286d015ea7653d72f18a7a866b17235eb846eb2"
+"@navikt/eslint-config-teamsykmelding@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@navikt/eslint-config-teamsykmelding@npm:1.7.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Feslint-config-teamsykmelding%2F1.7.0%2F3529a66f69b93eb4f7be9311e77001c770abea7a"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.59.0
     "@typescript-eslint/parser": ^5.59.0
@@ -2304,7 +2304,7 @@ __metadata:
     eslint: ">=8"
     prettier: ">=2"
     typescript: ">=4"
-  checksum: b3ede712f652b17d6b92573be347e4f9df8a9a68e127954133dc5d632ae2c31f3335bee8754cf23549ffda6d18b19e34835b5a37e0c6f952e37ffda9dab7fd41
+  checksum: 127eaa2b4a04fc51e65796c54cc9d2bb89909597854197cae5b39a998f6d98578f9c72c66991c7376a0279d1e3cc8a622f4b4eeba8aab10a4543477caf70151d
   languageName: node
   linkType: hard
 
@@ -5641,7 +5641,7 @@ __metadata:
     "@navikt/ds-icons": ^2.9.7
     "@navikt/ds-react": ^2.9.7
     "@navikt/ds-tailwind": ^2.8.16
-    "@navikt/eslint-config-teamsykmelding": ^1.6.0
+    "@navikt/eslint-config-teamsykmelding": ^1.7.0
     "@navikt/fnrvalidator": ^1.3.3
     "@navikt/nav-dekoratoren-moduler": ^2.0.1
     "@navikt/next-auth-wonderwall": ^1.3.0

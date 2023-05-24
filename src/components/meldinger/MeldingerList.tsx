@@ -21,7 +21,7 @@ const MeldingerList = ({ sykmeldtId, sykmeldt }: Props): JSX.Element => {
 
     return (
         <SectionListRoot>
-            <ListSection id={`aktivitetsvarsler-header-list`} title="Aktivitetsvarsler">
+            <ListSection id="aktivitetsvarsler-header-list" title="Aktivitetsvarsler">
                 <Grid>
                     {sykmeldt.aktivitetsvarsler.map((it) => (
                         <Cell key={it.hendelseId} xs={12}>
