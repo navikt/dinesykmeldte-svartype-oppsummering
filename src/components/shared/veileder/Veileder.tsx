@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, ReactNode } from 'react'
 import { BodyLong, GuidePanel, Heading } from '@navikt/ds-react'
-import cn from 'classnames'
 
+import { cn } from '../../../utils/tw-utils'
 import { useLogAmplitudeEvent } from '../../../amplitude/amplitude'
 
 import styles from './Veileder.module.css'
@@ -9,53 +9,66 @@ import styles from './Veileder.module.css'
 interface Props {
     title?: string
     text?: string | string[]
-    border?: boolean
     illustration?: ReactNode
-    flexWrap?: boolean
+    veilederMerInfo?: boolean
 }
 
-function Veileder({
+export function Veileder({
     children,
     title,
     text,
-    border = true,
     illustration,
-    flexWrap,
+    veilederMerInfo,
 }: PropsWithChildren<Props>): JSX.Element {
-    useLogAmplitudeEvent({
-        eventName: 'guidepanel vist',
-        data: { tekst: Array.isArray(text) ? text[0] : text, komponent: 'Veileder' },
-    })
-
     return (
-        <div
-            className={cn(styles.veilederWrapper, { [styles.disableBorder]: !border }, { [styles.flexWrap]: flexWrap })}
-        >
-            <GuidePanel className={styles.veilederPanel} illustration={illustration}>
-                {title && (
-                    <Heading level="2" size="small" spacing>
-                        {title}
-                    </Heading>
-                )}
-                {typeof text === 'string' ? (
-                    <BodyLong>{text}</BodyLong>
-                ) : (
-                    text?.map(
-                        (it, index) =>
-                            it !== '' && (
-                                <BodyLong
-                                    key={it}
-                                    className={cn({ [styles.bodyLongMargin]: index !== text.length - 1 })}
-                                >
-                                    {it}
-                                </BodyLong>
-                            ),
-                    )
-                )}
+        <div className={cn(styles.veileder, { [styles.centerContent]: !veilederMerInfo })}>
+            <GuidePanel className={cn('mx-12 print:hidden', styles.noBorder)} illustration={illustration}>
+                <VeilederBody title={title} text={text} />
                 {children}
             </GuidePanel>
         </div>
     )
 }
 
-export default Veileder
+export function VeilederBorder({
+    children,
+    title,
+    text,
+    illustration,
+}: PropsWithChildren & Pick<Props, 'title' | 'text' | 'illustration'>): JSX.Element {
+    return (
+        <GuidePanel className="mb-12 print:hidden" illustration={illustration}>
+            <VeilederBody title={title} text={text} />
+            {children}
+        </GuidePanel>
+    )
+}
+
+function VeilederBody({ title, text }: Pick<Props, 'title' | 'text'>): JSX.Element {
+    useLogAmplitudeEvent({
+        eventName: 'guidepanel vist',
+        data: { tekst: Array.isArray(text) ? text[0] : text, komponent: 'Veileder' },
+    })
+
+    return (
+        <>
+            {title && (
+                <Heading level="2" size="small" spacing>
+                    {title}
+                </Heading>
+            )}
+            {typeof text === 'string' ? (
+                <BodyLong className="leading-normal">{text}</BodyLong>
+            ) : (
+                text?.map(
+                    (it, index) =>
+                        it !== '' && (
+                            <BodyLong key={it} className={cn('leading-normal', { 'mb-3': index !== text.length - 1 })}>
+                                {it}
+                            </BodyLong>
+                        ),
+                )
+            )}
+        </>
+    )
+}
