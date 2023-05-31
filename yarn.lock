@@ -6399,13 +6399,13 @@ __metadata:
   linkType: hard
 
 "estree-util-build-jsx@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "estree-util-build-jsx@npm:2.0.0"
+  version: 2.2.2
+  resolution: "estree-util-build-jsx@npm:2.2.2"
   dependencies:
-    "@types/estree-jsx": ^0.0.1
+    "@types/estree-jsx": ^1.0.0
     estree-util-is-identifier-name: ^2.0.0
     estree-walker: ^3.0.0
-  checksum: 840a9d6a8d05db431da315f34c2bde9b7c7e1511f988d71d5fedbe43077ca55b4f35322256e608659adadbe944092fde9610b4c3ee207fbbbb8aa9f247cd981d
+  checksum: d008ac36a45d797eadca696f41b4c1ac0587ec0e0b52560cfb0e76d14ef15fc18e526f9023b6e5457dafa9cf3f010c9bb1dfc9c727ebd7cf0ba2ebbaa43919ac
   languageName: node
   linkType: hard
 
