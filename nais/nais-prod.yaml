@@ -21,7 +21,7 @@ spec:
         requests:
           cpu: 100m
   replicas:
-    min: 1
+    min: 2
     max: 3
     cpuThresholdPercentage: 50
   resources:
