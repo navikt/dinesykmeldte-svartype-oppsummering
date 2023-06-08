@@ -26,10 +26,9 @@ spec:
     cpuThresholdPercentage: 50
   resources:
     limits:
-      cpu: 500m
       memory: 1024Mi
     requests:
-      cpu: 200m
+      cpu: 400m
       memory: 512Mi
   tokenx:
     enabled: true
@@ -45,6 +44,9 @@ spec:
     path: /arbeidsgiver/sykmeldte/api/internal/is_alive
   readiness:
     path: /arbeidsgiver/sykmeldte/api/internal/is_ready
+  startup:
+    path: /arbeidsgiver/sykmeldte/api/internal/is_ready
+    initialDelay: 20
   env:
     - name: RUNTIME_VERSION
       value: {{version}}
