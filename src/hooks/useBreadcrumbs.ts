@@ -155,6 +155,7 @@ export enum SsrPathVariants {
     Root = '/',
     NotFound = '/404',
     ServerError = '/500',
+    Error = '/_error',
     Sykmeldt = '/[sykmeldtId]',
     Soknader = '/sykmeldt/[sykmeldtId]/soknader',
     Soknad = '/sykmeldt/[sykmeldtId]/soknad/[soknadId]',
@@ -182,6 +183,7 @@ export function createInitialServerSideBreadcrumbs(
 ): CompleteCrumb[] {
     switch (pathname) {
         case SsrPathVariants.Root:
+        case SsrPathVariants.Error:
         case SsrPathVariants.NotFound:
         case SsrPathVariants.ServerError:
         case SsrPathVariants.Sykmeldt:
