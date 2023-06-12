@@ -22,7 +22,7 @@ spec:
           cpu: 100m
   replicas:
     min: 2
-    max: 3
+    max: 4
     cpuThresholdPercentage: 50
   resources:
     limits:
