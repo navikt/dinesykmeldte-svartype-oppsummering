@@ -29,7 +29,7 @@ spec:
       memory: 1024Mi
     requests:
       cpu: 400m
-      memory: 512Mi
+      memory: 756Mi
   tokenx:
     enabled: true
   accessPolicy:
