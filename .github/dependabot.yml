@@ -1,0 +1,35 @@
+version: 2
+
+registries:
+  npm-github:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{ secrets.READER_TOKEN }}
+
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '03:00'
+    open-pull-requests-limit: 20
+    registries: '*'
+    groups:
+      aksel-dependencies:
+        patterns:
+          - '@navikt/aksel*'
+          - '@navikt/ds*'
+      react-dependencies:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
+      graphql-codegen:
+        patterns:
+          - '@graphql-codegen/*'
+      team-deps:
+        patterns:
+          - '@navikt/dinesykmeldte-sidemeny'
+          - '@navikt/next-auth-wonderwall'
+          - '@navikt/next-logger'
