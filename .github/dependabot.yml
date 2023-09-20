@@ -28,8 +28,37 @@ updates:
       graphql-codegen:
         patterns:
           - '@graphql-codegen/*'
+      graphql-runtime:
+        patterns:
+          - '@apollo/client'
+          - '@apollo/server'
+          - '@as-integrations/next'
+          - '@graphql-tools/*'
+          - '@graphql-typed-document-node/core'
+          - 'graphql'
+          - 'graphql-tag'
       team-deps:
         patterns:
           - '@navikt/dinesykmeldte-sidemeny'
           - '@navikt/next-auth-wonderwall'
           - '@navikt/next-logger'
+          - 'nextleton'
+      next:
+        patterns:
+          - 'next'
+          - '@next/bundle-analyzer'
+          - 'eslint-config-next'
+      code-style:
+        patterns:
+          - 'prettier'
+          - 'prettier-plugin-tailwindcss'
+      testing:
+        patterns:
+          - 'vitest'
+          - 'vitest-dom'
+          - '@vitejs/plugin-react'
+          - 'open'
+          - 'next-router-mock'
+          - '@testing-library/react'
+          - '@testing-library/user-event'
+          - 'jsdom'
