@@ -5,4 +5,5 @@ import { TokenPayload } from '../../auth/withAuthentication'
 export interface ResolverContextType extends BaseContext {
     payload: TokenPayload
     accessToken: string
+    xRequestId: string | undefined
 }

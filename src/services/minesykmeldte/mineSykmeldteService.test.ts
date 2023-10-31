@@ -1,12 +1,18 @@
 import { vi, describe, it, expect } from 'vitest'
 
+import { ResolverContextType } from '../../graphql/resolvers/resolverTypes'
+
 import { getVirksomheter } from './mineSykmeldteService'
 
 vi.mock('@navikt/next-auth-wonderwall', () => ({
     grantTokenXOboToken: () => 'mock-token',
     isInvalidTokenSet: () => false,
 }))
-
+const context: ResolverContextType = {
+    xRequestId: 'mock-request-id',
+    accessToken: 'mock-token',
+    payload: {} as never,
+}
 describe('getVirksomheter', () => {
     it('should throw when response is not in 404', async () => {
         global.fetch = vi.fn(
@@ -18,7 +24,7 @@ describe('getVirksomheter', () => {
                 }) as Response,
         )
 
-        await expect(getVirksomheter('mock-token')).rejects.toThrowError(
+        await expect(getVirksomheter(context)).rejects.toThrowError(
             'Unknown error from DineSykmeldte Backend, responded with 404 Not Found when fetching virksomheter',
         )
     })
@@ -33,7 +39,7 @@ describe('getVirksomheter', () => {
                 }) as Response,
         )
 
-        await expect(getVirksomheter('mock-token')).rejects.toThrowError(
+        await expect(getVirksomheter(context)).rejects.toThrowError(
             'Unknown error from DineSykmeldte Backend, responded with 500 Internal Server Error when fetching virksomheter',
         )
     })
@@ -50,7 +56,7 @@ describe('getVirksomheter', () => {
                 }) as Response,
         )
 
-        await expect(getVirksomheter('mock-token')).rejects.toThrowError(
+        await expect(getVirksomheter(context)).rejects.toThrowError(
             "Backend responded with 200 OK, but didn't respond with JSON, text response: Some text error",
         )
     })
@@ -66,7 +72,7 @@ describe('getVirksomheter', () => {
                 }) as Response,
         )
 
-        await expect(getVirksomheter('mock-token')).rejects.toThrowError(
+        await expect(getVirksomheter(context)).rejects.toThrowError(
             /Unable to parse API result, backend responded with: 200 OK, parse error:/,
         )
     })
@@ -82,6 +88,6 @@ describe('getVirksomheter', () => {
                 }) as Response,
         )
 
-        expect(await getVirksomheter('mock-token')).toEqual([{ navn: 'Fakesomehet', orgnummer: '42' }])
+        expect(await getVirksomheter(context)).toEqual([{ navn: 'Fakesomehet', orgnummer: '42' }])
     })
 })

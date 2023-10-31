@@ -169,10 +169,11 @@ export function createResolverContextType(req: IncomingMessage): ResolverContext
     if (!token) {
         return null
     }
-
+    const xRequestId = req.headers['x-request-id'] as string | undefined
     const jwtPayload = token.replace('Bearer ', '').split('.')[1]
     return {
         payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
         accessToken: token.replace('Bearer ', ''),
+        xRequestId: xRequestId,
     }
 }

@@ -5,6 +5,7 @@ import { logger } from '@navikt/next-logger'
 import { PreviewSykmeldt, ReadType, Soknad, Sykmelding, Virksomhet } from '../../graphql/resolvers/resolvers.generated'
 import { getServerEnv } from '../../utils/env'
 import metrics from '../../metrics'
+import { ResolverContextType } from '../../graphql/resolvers/resolverTypes'
 
 import { SykmeldingSchema } from './schema/sykmelding'
 import { SoknadSchema } from './schema/soknad'
@@ -24,10 +25,10 @@ const getMarkReadPath = (type: ReadType, id: string): string => {
     }
 }
 
-export async function markRead(type: ReadType, id: string, accessToken: string): Promise<boolean> {
+export async function markRead(type: ReadType, id: string, context: ResolverContextType): Promise<boolean> {
     const [result, statusCode] = await fetchMineSykmeldteBackend({
         what: 'mark-read-mutation',
-        accessToken,
+        context,
         path: getMarkReadPath(type, id),
         schema: MessageResponseSchema,
         method: 'PUT',
@@ -41,10 +42,10 @@ export async function markRead(type: ReadType, id: string, accessToken: string):
     return true
 }
 
-export async function unlinkSykmeldt(sykmeldtId: string, accessToken: string): Promise<boolean> {
+export async function unlinkSykmeldt(sykmeldtId: string, context: ResolverContextType): Promise<boolean> {
     const [result, statusCode] = await fetchMineSykmeldteBackend({
         what: 'unlink-mutation',
-        accessToken,
+        context,
         path: `narmesteleder/${sykmeldtId}/avkreft`,
         schema: MessageResponseSchema,
         method: 'POST',
@@ -58,10 +59,10 @@ export async function unlinkSykmeldt(sykmeldtId: string, accessToken: string): P
     return true
 }
 
-export async function markAllSykmeldingerAndSoknaderAsRead(accessToken: string): Promise<boolean> {
+export async function markAllSykmeldingerAndSoknaderAsRead(context: ResolverContextType): Promise<boolean> {
     const [result, statusCode] = await fetchMineSykmeldteBackend({
         what: 'mark-all-sykmeldinger-and-soknader-as-read-mutation',
-        accessToken,
+        context,
         path: 'hendelser/read',
         schema: MessageResponseSchema,
         method: 'PUT',
@@ -74,10 +75,10 @@ export async function markAllSykmeldingerAndSoknaderAsRead(accessToken: string):
     return true
 }
 
-export async function getVirksomheter(accessToken: string): Promise<Virksomhet[]> {
+export async function getVirksomheter(context: ResolverContextType): Promise<Virksomhet[]> {
     const [result] = await fetchMineSykmeldteBackend({
         what: 'virksomheter',
-        accessToken,
+        context,
         path: 'virksomheter',
         schema: VirksomheterApiSchema,
     })
@@ -85,10 +86,11 @@ export async function getVirksomheter(accessToken: string): Promise<Virksomhet[]
     return result
 }
 
-export async function getMineSykmeldte(accessToken: string): Promise<PreviewSykmeldt[]> {
+export async function getMineSykmeldte(context: ResolverContextType): Promise<PreviewSykmeldt[]> {
+    logger.info(`Fetching mine sykmeldte from backend requestId ${context.xRequestId}`)
     const [result] = await fetchMineSykmeldteBackend({
         what: 'sykmeldte',
-        accessToken,
+        context,
         path: 'minesykmeldte',
         schema: MineSykmeldteApiSchema,
     })
@@ -96,10 +98,10 @@ export async function getMineSykmeldte(accessToken: string): Promise<PreviewSykm
     return result
 }
 
-export async function getSykmelding(sykmeldingId: string, accessToken: string): Promise<Sykmelding> {
+export async function getSykmelding(sykmeldingId: string, context: ResolverContextType): Promise<Sykmelding> {
     const [result] = await fetchMineSykmeldteBackend({
         what: 'sykmelding',
-        accessToken,
+        context,
         path: `sykmelding/${sykmeldingId}`,
         schema: SykmeldingSchema,
     })
@@ -107,10 +109,10 @@ export async function getSykmelding(sykmeldingId: string, accessToken: string): 
     return result
 }
 
-export async function getSoknad(soknadId: string, accessToken: string): Promise<Soknad> {
+export async function getSoknad(soknadId: string, context: ResolverContextType): Promise<Soknad> {
     const [result] = await fetchMineSykmeldteBackend({
         what: 'soknad',
-        accessToken,
+        context,
         path: `soknad/${soknadId}`,
         schema: SoknadSchema,
     })
@@ -120,18 +122,18 @@ export async function getSoknad(soknadId: string, accessToken: string): Promise<
 
 async function fetchMineSykmeldteBackend<SchemaType extends ZodTypeAny>({
     what,
-    accessToken,
+    context,
     path,
     schema,
     method = 'GET',
 }: {
     what: string
-    accessToken: string
+    context: ResolverContextType
     path: string
     schema: SchemaType
     method?: string
 }): Promise<[result: z.infer<SchemaType>, httpStatus: number]> {
-    const tokenX = await grantTokenXOboToken(accessToken, getServerEnv().DINE_SYKMELDTE_BACKEND_SCOPE)
+    const tokenX = await grantTokenXOboToken(context.accessToken, getServerEnv().DINE_SYKMELDTE_BACKEND_SCOPE)
     if (isInvalidTokenSet(tokenX)) {
         throw new Error(`Unable to exchange token for dinesykmeldte-backend token, reason: ${tokenX.message}`, {
             cause: tokenX.error,
@@ -142,6 +144,7 @@ async function fetchMineSykmeldteBackend<SchemaType extends ZodTypeAny>({
     const response = await fetch(`${getServerEnv().DINE_SYKMELDTE_BACKEND_URL}/api/${path}`, {
         method,
         headers: {
+            'x-request-id': context.xRequestId ?? 'unknown',
             Authorization: `Bearer ${tokenX}`,
             'Content-Type': 'application/json',
         },
