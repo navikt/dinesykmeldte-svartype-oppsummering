@@ -61,13 +61,15 @@ function SykmeldteList(): ReactElement {
                 {notifyingAndNotSendtSoknader.length > 0 && (
                     <SykmeldteNotifying sykmeldte={notifyingAndNotSendtSoknader} focusSykmeldtId={focusSykmeldtId} />
                 )}
-                <GeneralFeedback
-                    feedbackId="dine-sykmeldte-root"
-                    metadata={{
-                        sykmeldteMedVarsel: `${notifyingAndNotSendtSoknader.length}`,
-                        sykmeldteUtenVarsel: `${nonNotifying.length}`,
-                    }}
-                />
+                {(data?.mineSykmeldte?.length ?? 0) > 0 && (
+                    <GeneralFeedback
+                        feedbackId="dine-sykmeldte-root"
+                        metadata={{
+                            sykmeldteMedVarsel: `${notifyingAndNotSendtSoknader.length}`,
+                            sykmeldteUtenVarsel: `${nonNotifying.length}`,
+                        }}
+                    />
+                )}
                 {nonNotifying.length > 0 && (
                     <SykmeldteNonNotifying sykmeldte={nonNotifying} focusSykmeldtId={focusSykmeldtId} />
                 )}
