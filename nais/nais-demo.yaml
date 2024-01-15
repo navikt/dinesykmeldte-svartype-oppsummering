@@ -26,9 +26,6 @@ spec:
     path: /arbeidsgiver/sykmeldte/api/internal/is_ready
   accessPolicy:
     outbound:
-      external:
-        - host: nav.no
-        - host: dekoratoren.nav.no
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
