@@ -271,6 +271,7 @@ export type SoknadSporsmalSvar = {
 }
 
 export enum SoknadSporsmalSvartypeEnum {
+    Bekreftelsespunkter = 'BEKREFTELSESPUNKTER',
     Belop = 'BELOP',
     Checkbox = 'CHECKBOX',
     CheckboxGruppe = 'CHECKBOX_GRUPPE',
