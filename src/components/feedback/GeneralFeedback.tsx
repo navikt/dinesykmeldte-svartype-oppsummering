@@ -104,7 +104,7 @@ function GeneralFeedback({ feedbackId, metadata }: Props): ReactElement | null {
                                     error={errorMessage}
                                     label={responseTypeToLabelMap[activeResponseType]}
                                     onKeyDown={async (e) => {
-                                        if (e.key === 'Enter' && !e.shiftKey) {
+                                        if (e.key === 'Enter' && e.ctrlKey) {
                                             e.preventDefault()
                                             await handleSend()
                                         }
