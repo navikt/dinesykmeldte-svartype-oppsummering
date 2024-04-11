@@ -1,8 +1,7 @@
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 import { Page } from '@navikt/ds-react'
 import { useRouter } from 'next/router'
 
-import { registerClientMetric } from '../utils/clientMetric'
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 import PageError from '../components/shared/errors/PageError'
 import LinkButton from '../components/shared/links/LinkButton'
@@ -10,10 +9,6 @@ import LinkButton from '../components/shared/links/LinkButton'
 function NotFound(): ReactElement | boolean {
     const router = useRouter()
     useUpdateBreadcrumbs(() => [{ title: 'Ukjent side' }])
-
-    useEffect(() => {
-        registerClientMetric({ type: '404', path: window.location.pathname })
-    }, [])
 
     return (
         <Page>

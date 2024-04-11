@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client'
 import { useDispatch, useSelector } from 'react-redux'
-import { logger } from '@navikt/next-logger'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import * as R from 'remeda'
@@ -25,7 +24,6 @@ function useSelectedVirksomhet(): 'all' | string {
     }
 
     if (!queryData) {
-        logger.warn(`User without prefetched virksomheter`)
         return ''
     }
 

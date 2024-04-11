@@ -2,8 +2,6 @@ import { Component, ErrorInfo, PropsWithChildren, ReactNode } from 'react'
 import { Page } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 
-import { registerClientMetric } from '../../../utils/clientMetric'
-
 import PageError from './PageError'
 
 interface State {
@@ -21,7 +19,6 @@ class ErrorBoundary extends Component<PropsWithChildren, State> {
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-        registerClientMetric({ type: 'boundary', path: window.location.pathname })
         logger.error({ error, errorInfo })
     }
 
