@@ -81,7 +81,6 @@ export function withAuthenticatedPage(handler: PageHandler = defaultPageHandler)
         const bearerToken = getToken(context.req)
         if (bearerToken == null) {
             metrics.loginRedirect.inc({ path: cleanPath }, 1)
-            logger.info('Could not find any bearer token on the request. Redirecting to login.')
             return {
                 redirect: { destination: `/oauth2/login?redirect=${getRedirectPath(context)}`, permanent: false },
             }

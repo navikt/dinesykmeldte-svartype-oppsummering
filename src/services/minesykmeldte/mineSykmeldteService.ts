@@ -51,7 +51,6 @@ export async function unlinkSykmeldt(sykmeldtId: string, context: ResolverContex
         method: 'POST',
     })
 
-    logger.info(`Unlinking ${sykmeldtId} from nærmesteleder, resulted in ${result.message}`)
     if (statusCode !== 200) {
         throw new Error(result.message)
     }
@@ -87,7 +86,6 @@ export async function getVirksomheter(context: ResolverContextType): Promise<Vir
 }
 
 export async function getMineSykmeldte(context: ResolverContextType): Promise<PreviewSykmeldt[]> {
-    logger.info(`Fetching mine sykmeldte from backend requestId ${context.xRequestId}`)
     const [result] = await fetchMineSykmeldteBackend({
         what: 'sykmeldte',
         context,
@@ -165,9 +163,7 @@ async function fetchMineSykmeldteBackend<SchemaType extends ZodTypeAny>({
     const responseJson = await getJsonBody(response)
     const result = schema.safeParse(responseJson)
     if (result.success) {
-        logger.info(
-            `Successful zod parse, backend API responded to path ${path} with ${response.status} ${response.statusText}`,
-        )
+        logger.info(`Backend: ${response.status} ${response.statusText} for ${path}`)
         return [result.data, response.status]
     }
 

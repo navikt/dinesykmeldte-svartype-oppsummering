@@ -98,7 +98,7 @@ function useMarkRead(
             try {
                 logAmplitudeEvent({ eventName: 'skjema startet', data: { skjemanavn: 'marker sykmelding som lest' } })
                 await mutate({ variables: { sykmeldingId }, refetchQueries: [{ query: MineSykmeldteDocument }] })
-                logger.info(`Marked sykmelding ${sykmeldingId} as read`)
+                logger.info(`Client: Marked sykmelding ${sykmeldingId} as read`)
             } catch (e) {
                 logAmplitudeEvent({
                     eventName: 'skjema innsending feilet',

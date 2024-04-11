@@ -53,13 +53,13 @@ function useMarkRead(aktivitetsvarselId: string): void {
                     data: { skjemanavn: 'marker aktivitetsvarsel som lest' },
                 })
                 await mutate({ variables: { aktivitetsvarselId }, refetchQueries: [{ query: MineSykmeldteDocument }] })
-                logger.info(`Marked aktivitetsvarsel with id ${aktivitetsvarselId} as read`)
+                logger.info(`Client: Marked aktivitetsvarsel with id ${aktivitetsvarselId} as read`)
             } catch (e) {
                 logAmplitudeEvent({
                     eventName: 'skjema innsending feilet',
                     data: { skjemanavn: 'marker aktivitetsvarsel som lest' },
                 })
-                logger.error(`Unable to mark aktivitetsvarsel with id ${aktivitetsvarselId} as read`)
+                logger.error(`Client: Unable to mark aktivitetsvarsel with id ${aktivitetsvarselId} as read`)
                 throw e
             }
         })()

@@ -10,12 +10,10 @@ export async function feedback(feedback: object, context: ResolverContextType): 
 
     const childLogger = createChildLogger(context.xRequestId ?? 'missing')
 
-    childLogger.info(`Submitting feedback to flexjar-backend`)
-
     const oboResult = await requestOboToken(context.accessToken, serverEnv.FLEXJAR_BACKEND_SCOPE)
     if (!oboResult.ok) {
         throw new Error(
-            `Unable to exchange token for flex-syketilfelle token, requestId: ${context.xRequestId},reason: ${oboResult.error.message}`,
+            `Flexjar: Unable to exchange token for flex-syketilfelle token, requestId: ${context.xRequestId},reason: ${oboResult.error.message}`,
             {
                 cause: oboResult.error,
             },
@@ -39,12 +37,12 @@ export async function feedback(feedback: object, context: ResolverContextType): 
     }
 
     if (response.ok) {
-        childLogger.info('Submitted feedback OK')
+        childLogger.info('Flexjar: Submitted feedback OK')
         return true
     }
 
     throw new Error(
-        `Unable to submit feedback to flexjar-backend, requestId: ${context.xRequestId}, status: ${response.status} ${response.statusText}`,
+        `Flexjar: Unable to submit feedback to flexjar-backend, requestId: ${context.xRequestId}, status: ${response.status} ${response.statusText}`,
     )
 }
 

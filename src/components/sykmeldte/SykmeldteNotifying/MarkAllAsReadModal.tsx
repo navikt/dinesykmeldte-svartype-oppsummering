@@ -28,9 +28,9 @@ function MarkAllAsReadModal({ isModalOpen, onClose }: Props): ReactElement {
                         onClose(false)
                     },
                 })
-                logger.info(`Marked all sykmelding and soknad notifications as read`)
+                logger.info(`Client: Marked all sykmelding and soknad notifications as read`)
             } catch (e) {
-                logger.error(`Unable to mark all sykmelding and soknad notifications as read: ${e}`)
+                logger.error(`Client: Unable to mark all sykmelding and soknad notifications as read: ${e}`)
                 throw e
             }
         })()

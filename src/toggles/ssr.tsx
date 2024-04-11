@@ -69,11 +69,7 @@ async function getAndValidateDefinitions(): Promise<ReturnType<typeof getDefinit
         )
     }
 
-    logger.info(
-        `Fetched ${definitions.features.length} flags from unleash: ${definitions.features
-            .map((it) => it.name)
-            .join('\n')}\n`,
-    )
+    logger.info(`Unleash: OK, found ${EXPECTED_TOGGLES.length} flags in ${definitions.features.length} definitions`)
 
     return definitions
 }
