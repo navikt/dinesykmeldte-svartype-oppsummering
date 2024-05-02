@@ -13,6 +13,10 @@ spec:
   prometheus:
     enabled: true
     path: /arbeidsgiver/sykmeldte/api/internal/prometheus
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   idporten:
     enabled: true
     sidecar:
