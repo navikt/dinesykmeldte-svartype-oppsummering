@@ -29,6 +29,8 @@ spec:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: decorator-next
+          namespace: personbruker
   env:
     - name: RUNTIME_VERSION
       value: demo

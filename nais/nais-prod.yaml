@@ -48,6 +48,8 @@ spec:
           namespace: flex
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: decorator-next
+          namespace: personbruker
       external:
         - host: teamsykmelding-unleash-api.nav.cloud.nais.io
   liveness:
