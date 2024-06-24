@@ -13,7 +13,7 @@ const getDocumentParameter = (initialProps: DocumentInitialProps, name: string):
     return initialProps.head?.find((element) => element?.props?.name === name)?.props?.content
 }
 
-function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
+function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prodNext' | 'prod' {
     if (ctx.pathname === '/500' || ctx.pathname === '/404' || process.env.NODE_ENV === 'development') {
         // Blir statisk kompilert i GHA så må hentes defra
         return 'prod'
@@ -25,6 +25,7 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
         case 'dev':
             return 'dev'
         case 'demo':
+            return 'prodNext'
         case 'prod':
             return 'prod'
         default:
