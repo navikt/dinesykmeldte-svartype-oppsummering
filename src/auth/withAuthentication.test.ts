@@ -30,7 +30,7 @@ vi.mock('@navikt/oasis', async () => {
     }
 })
 
-const mockedValidateIdportenToken = oasis.validateToken as unknown as Mock<[ReturnType<typeof oasis.validateToken>]>
+const mockedValidateIdportenToken = oasis.validateToken as unknown as Mock<typeof oasis.validateToken>
 
 describe('withAuthentication', () => {
     beforeEach(() => {
